@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		5F6025391C8708FD00EACB29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6025381C8708FD00EACB29 /* AppDelegate.swift */; };
-		5F60253B1C8708FD00EACB29 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F60253A1C8708FD00EACB29 /* ViewController.swift */; };
-		5F60253E1C8708FD00EACB29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F60253C1C8708FD00EACB29 /* Main.storyboard */; };
+		5F60253B1C8708FD00EACB29 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F60253A1C8708FD00EACB29 /* MainViewController.swift */; };
 		5F6025401C8708FD00EACB29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F60253F1C8708FD00EACB29 /* Assets.xcassets */; };
 		5F6025431C8708FD00EACB29 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F6025411C8708FD00EACB29 /* LaunchScreen.storyboard */; };
 		5F60254E1C8708FE00EACB29 /* Image_CompareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F60254D1C8708FE00EACB29 /* Image_CompareTests.swift */; };
 		5F6025591C8708FE00EACB29 /* Image_CompareUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6025581C8708FE00EACB29 /* Image_CompareUITests.swift */; };
+		5FC9ED5E1C87502C00F4D24D /* PictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC9ED5D1C87502C00F4D24D /* PictureViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,8 +36,7 @@
 /* Begin PBXFileReference section */
 		5F6025351C8708FD00EACB29 /* Image Compare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Image Compare.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F6025381C8708FD00EACB29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5F60253A1C8708FD00EACB29 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		5F60253D1C8708FD00EACB29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5F60253A1C8708FD00EACB29 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		5F60253F1C8708FD00EACB29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F6025421C8708FD00EACB29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F6025441C8708FD00EACB29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,6 +46,7 @@
 		5F6025541C8708FE00EACB29 /* Image CompareUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Image CompareUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F6025581C8708FE00EACB29 /* Image_CompareUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image_CompareUITests.swift; sourceTree = "<group>"; };
 		5F60255A1C8708FE00EACB29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FC9ED5D1C87502C00F4D24D /* PictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,8 +98,8 @@
 			isa = PBXGroup;
 			children = (
 				5F6025381C8708FD00EACB29 /* AppDelegate.swift */,
-				5F60253A1C8708FD00EACB29 /* ViewController.swift */,
-				5F60253C1C8708FD00EACB29 /* Main.storyboard */,
+				5F60253A1C8708FD00EACB29 /* MainViewController.swift */,
+				5FC9ED5D1C87502C00F4D24D /* PictureViewController.swift */,
 				5F60253F1C8708FD00EACB29 /* Assets.xcassets */,
 				5F6025411C8708FD00EACB29 /* LaunchScreen.storyboard */,
 				5F6025441C8708FD00EACB29 /* Info.plist */,
@@ -231,7 +231,6 @@
 			files = (
 				5F6025431C8708FD00EACB29 /* LaunchScreen.storyboard in Resources */,
 				5F6025401C8708FD00EACB29 /* Assets.xcassets in Resources */,
-				5F60253E1C8708FD00EACB29 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,7 +255,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F60253B1C8708FD00EACB29 /* ViewController.swift in Sources */,
+				5F60253B1C8708FD00EACB29 /* MainViewController.swift in Sources */,
+				5FC9ED5E1C87502C00F4D24D /* PictureViewController.swift in Sources */,
 				5F6025391C8708FD00EACB29 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,14 +293,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5F60253C1C8708FD00EACB29 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5F60253D1C8708FD00EACB29 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5F6025411C8708FD00EACB29 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -484,6 +476,7 @@
 				5F60255F1C8708FE00EACB29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5F6025601C8708FE00EACB29 /* Build configuration list for PBXNativeTarget "Image CompareTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +485,7 @@
 				5F6025621C8708FE00EACB29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5F6025631C8708FE00EACB29 /* Build configuration list for PBXNativeTarget "Image CompareUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +494,7 @@
 				5F6025651C8708FE00EACB29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

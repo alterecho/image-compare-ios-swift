@@ -36,8 +36,32 @@ class MainViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private var pictureViewController1, pictureViewController2: PictureViewController?
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator);
+        coordinator.animateAlongsideTransition({ (context) -> Void in
+            
+            
+            if size.width > size.height {
+                
+                // * landscape
+                self.pictureViewController1.frame = CGRectMake(0.0, self.statusBarHeight, size.width * 0.5, size.height);
+                self.pictureViewController2.frame = CGRectMake(size.width * 0.5, self.statusBarHeight, size.width * 0.5, size.height)
+            } else {
+                
+                // * portrait
+                self.pictureViewController1.frame = CGRectMake(0.0, self.statusBarHeight, size.width, size.height * 0.5)
+                self.pictureViewController2.frame = CGRectMake(0.0,
+                    self.pictureViewController1.frame.origin.y + self.pictureViewController1.frame.size.height,
+                    size.width, size.height * 0.5)
+            }
+            
+            }) { (context) -> Void in
+                
+        }
+    }
     
+    private var pictureViewController1, pictureViewController2: PictureViewController!
+    private var statusBarHeight: CGFloat = 20.0
     
 
 }

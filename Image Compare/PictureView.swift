@@ -39,8 +39,12 @@ class PictureView: UIView {
         self.addGestureRecognizer(_panGesture!)
         _rotationGesture = UIRotationGestureRecognizer(target: self, action: "rotate:")
         self.addGestureRecognizer(_rotationGesture!)
+        _tapGesture = UITapGestureRecognizer(target: self, action: "tap:")
+        _tapGesture?.numberOfTapsRequired = 2
+        self.addGestureRecognizer(_tapGesture!)
         
         self.addSubview(_imageView)
+        self.clipsToBounds = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,6 +52,10 @@ class PictureView: UIView {
     }
     
     deinit {
+        if let gesture = _tapGesture {
+            self.removeGestureRecognizer(gesture)
+        }
+        
         if let gesture = _rotationGesture {
             self.removeGestureRecognizer(gesture)
         }
@@ -58,8 +66,25 @@ class PictureView: UIView {
         
     }
     
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first
+        touchPoint = touch?.locationInView(touch?.view)
+        super.touchesBegan(touches, withEvent: event)
+    }
+    
     @IBAction private func pan(gesture: UIPanGestureRecognizer) {
         print(gesture.translationInView(self))
+        let t = gesture.translationInView(self)
+        if gesture.state == UIGestureRecognizerState.Began {
+            originalPosition = _imageView.center
+        } else if gesture.state == UIGestureRecognizerState.Ended {
+        } else {
+            if let tp = touchPoint {
+                _imageView.center = CGPointMake(originalPosition.x + t.x, originalPosition.y + t.y)
+            }
+            
+        }
+        
     }
     
     @IBAction private func rotate(gesture: UIRotationGestureRecognizer) {
@@ -68,8 +93,24 @@ class PictureView: UIView {
         _imageView.transform = transform
     }
     
+    @IBAction private func tap(gesture: UITapGestureRecognizer) {
+        if gesture.numberOfTapsRequired == 2 {
+            self.reset()
+        }
+    }
+    
+    
+    
     private var _panGesture: UIPanGestureRecognizer?
     private var _rotationGesture: UIRotationGestureRecognizer?
+    private var _tapGesture: UITapGestureRecognizer?
     private let _imageView: UIImageView = UIImageView()
-
+    private var originalPosition: CGPoint = CGPointZero
+    private var touchPoint: CGPoint?
+    private var touchDiff: CGPoint = CGPointZero
+    
+    private func reset() {
+        _imageView.transform = CGAffineTransformMakeRotation(0.0)
+        _imageView.center = CGPointMake(self.frame.size.width * 0.5, self.frame.size.height * 0.5)
+    }
 }

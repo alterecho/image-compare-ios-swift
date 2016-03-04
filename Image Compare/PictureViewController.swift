@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MobileCoreServices
 
-class PictureViewController: UIViewController {
+class PictureViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // * manage frame of self.view, toolbar
     var frame: CGRect {
@@ -19,17 +20,16 @@ class PictureViewController: UIViewController {
         
         set(value) {
             self.view.frame = value
-            self.toolBar.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, 30.0)
+            self.toolBar.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, 44.0)
         }
     }
     
     override func loadView() {
-        super.loadView()
+        self.view = pictureView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.yellowColor()
         
         // * toolbar
         self.toolBar = UIToolbar(frame: CGRectMake(0.0, 0.0, 0.0, 0.0))
@@ -61,13 +61,35 @@ class PictureViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: UIImagePickerControllerDelegate
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let obj = info[UIImagePickerControllerOriginalImage]
+        if let image = obj as? UIImage {
+            pictureView.image = image
+        }
+        
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     
     //MARK: actions
     @IBAction func addButtonAction(button: UIBarButtonItem) {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.mediaTypes = [kUTTypeImage as String]
+        imagePickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         
+        self.presentViewController(imagePickerController, animated: true, completion: nil)
     }
     
     @IBAction func cameraButtonAction(button: UIBarButtonItem) {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.mediaTypes = [kUTTypeImage as String]
+        imagePickerController.sourceType = UIImagePickerControllerSourceType.Camera
+        imagePickerController.allowsEditing = true
+        
+        self.presentViewController(imagePickerController, animated: true, completion: nil)
         
     }
     
@@ -76,6 +98,7 @@ class PictureViewController: UIViewController {
     }
     
     //MARK: private
+    private let pictureView: PictureView = PictureView()
     private var toolBar: UIToolbar!
     private var addBarButtonItem, cameraBarButtonItem, compareBarButtonItem: UIBarButtonItem!
 

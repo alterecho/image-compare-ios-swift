@@ -37,11 +37,17 @@ class PictureView: UIView {
         // * gestures
         _panGesture = UIPanGestureRecognizer(target: self, action: "pan:")
         self.addGestureRecognizer(_panGesture!)
+        
         _rotationGesture = UIRotationGestureRecognizer(target: self, action: "rotate:")
         self.addGestureRecognizer(_rotationGesture!)
+        
         _tapGesture = UITapGestureRecognizer(target: self, action: "tap:")
         _tapGesture?.numberOfTapsRequired = 2
         self.addGestureRecognizer(_tapGesture!)
+        
+        _pinchGesture = UIPinchGestureRecognizer(target: self, action: "pinch:")
+        self.addGestureRecognizer(_pinchGesture!)
+        
         
         self.addSubview(_imageView)
         self.clipsToBounds = true
@@ -52,6 +58,10 @@ class PictureView: UIView {
     }
     
     deinit {
+        if let gesture = _pinchGesture {
+            self.removeGestureRecognizer(gesture)
+        }
+        
         if let gesture = _tapGesture {
             self.removeGestureRecognizer(gesture)
         }
@@ -99,18 +109,35 @@ class PictureView: UIView {
         }
     }
     
+    @IBAction private func pinch(gesture: UIPinchGestureRecognizer) {
+        print(gesture.scale)
+        if gesture.state == UIGestureRecognizerState.Began {
+            _initialFrame = _imageView.bounds
+        } else if gesture.state == UIGestureRecognizerState.Changed {
+            let w = _initialFrame.width * gesture.scale
+            let h = _initialFrame.height * gesture.scale
+            let transform = _imageView.transform
+            _imageView.bounds = CGRectMake(0.0, 0.0, w, h)
+        }
+        
+    }
     
     
     private var _panGesture: UIPanGestureRecognizer?
     private var _rotationGesture: UIRotationGestureRecognizer?
     private var _tapGesture: UITapGestureRecognizer?
+    private var _pinchGesture: UIPinchGestureRecognizer?
+    
     private let _imageView: UIImageView = UIImageView()
     private var originalPosition: CGPoint = CGPointZero
     private var touchPoint: CGPoint?
     private var touchDiff: CGPoint = CGPointZero
+    private var _initialFrame: CGRect = CGRectZero // * used to calculate image frame, for pinch gesture
     
     private func reset() {
         _imageView.transform = CGAffineTransformMakeRotation(0.0)
+        _imageView.sizeToFit()
         _imageView.center = CGPointMake(self.frame.size.width * 0.5, self.frame.size.height * 0.5)
+        
     }
 }

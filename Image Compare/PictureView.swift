@@ -99,8 +99,14 @@ class PictureView: UIView {
     
     @IBAction private func rotate(gesture: UIRotationGestureRecognizer) {
         print(gesture.rotation)
-        let transform = CGAffineTransformMakeRotation(gesture.rotation)
-        _imageView.transform = transform
+        if gesture.state == UIGestureRecognizerState.Began {
+            let transform = _imageView.transform
+            _initialAngle = atan2(transform.b, transform.a)
+        } else if gesture.state == UIGestureRecognizerState.Changed {
+            let transform = CGAffineTransformMakeRotation(_initialAngle + gesture.rotation)
+            _imageView.transform = transform
+        }
+       
     }
     
     @IBAction private func tap(gesture: UITapGestureRecognizer) {
@@ -116,7 +122,6 @@ class PictureView: UIView {
         } else if gesture.state == UIGestureRecognizerState.Changed {
             let w = _initialFrame.width * gesture.scale
             let h = _initialFrame.height * gesture.scale
-            let transform = _imageView.transform
             _imageView.bounds = CGRectMake(0.0, 0.0, w, h)
         }
         
@@ -133,6 +138,7 @@ class PictureView: UIView {
     private var touchPoint: CGPoint?
     private var touchDiff: CGPoint = CGPointZero
     private var _initialFrame: CGRect = CGRectZero // * used to calculate image frame, for pinch gesture
+    private var _initialAngle: CGFloat = 0.0 // * used for rotation gesture
     
     private func reset() {
         _imageView.transform = CGAffineTransformMakeRotation(0.0)

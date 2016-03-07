@@ -51,13 +51,11 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func loadView() {
         let detailsView = _DetailsView()
-        detailsView.delegate = self
         self.view = detailsView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         if let pvc = self.parentViewController {
             let screenSize = UIScreen.mainScreen().bounds.size
@@ -95,6 +93,11 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
         
         
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        (self.view as! _DetailsView).delegate = self
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -136,7 +139,8 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
     private func detailsViewClickedOutside(view: _DetailsView) {
         // * close the details window
         //self.view.removeFromSuperview()
-        self.removeFromParentViewController()
+        print("detailsView clicked outside")
+        self.dismiss()
         
     }
     
@@ -156,10 +160,11 @@ private class _DetailsView: UIView {
     weak var delegate: _DetailsViewProtocol?
     
     private override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
-        if point.x < self.frame.origin.x ||
-            point.y < self.frame.origin.y ||
-            point.x > self.frame.origin.x + self.frame.size.width ||
-            point.y > self.frame.origin.y + self.frame.size.height {
+        print("point:", point, "frame:", self.frame)
+        if point.x < 0.0 ||
+            point.y < 0.0 ||
+            point.x > self.frame.size.width ||
+            point.y > self.frame.size.height {
             if let method = delegate?.detailsViewClickedOutside(self) {
                 method
             }

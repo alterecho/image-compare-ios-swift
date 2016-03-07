@@ -8,9 +8,10 @@
 
 import UIKit
 import MobileCoreServices
+import AssetsLibrary
 
 /* 
-     The core view controller that handles picking of image, and other operations
+     The core view controller that handles picking of image, showing image's metadata, and other operations
 */
 class PictureViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -31,6 +32,9 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     override func loadView() {
+        if _pictureView == nil {
+            _pictureView = PictureView()
+        }
         self.view = _pictureView
     }
     
@@ -70,9 +74,17 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     //MARK:- UIImagePickerControllerDelegate
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        let obj = info[UIImagePickerControllerOriginalImage]
-        if let image = obj as? UIImage {
-            _pictureView.image = image
+        
+        self._pictureView.set(imagePickerControllerMediaInfo: info)
+        if let url = info[UIImagePickerControllerReferenceURL] as? NSURL {
+            
+            let assetsLibrary = ALAssetsLibrary()
+            assetsLibrary.assetForURL(url, resultBlock: { (asset) -> Void in
+                let assetRepresentation: ALAssetRepresentation = asset.defaultRepresentation()
+                let metaData = assetRepresentation.metadata()
+                }, failureBlock: { (error) -> Void in
+                    print(error)
+            })
         }
         
         picker.dismissViewControllerAnimated(true, completion: nil)
@@ -105,12 +117,15 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     private func _showDetails() {
-        if _detailsViewController == nil {
-            _detailsViewController = DetailsViewController(pictureViewController: self)
+        if let metaData = _pictureView.metaData {
+            if _detailsViewController == nil {
+                _detailsViewController = DetailsViewController(pictureViewController: self)
+            }
+            
+            _detailsViewController?.show(metaData: metaData, inViewController: self)
+            _detailsViewController?.setTarget(self, action: "_hideDetails")
         }
         
-        _detailsViewController?.show(inViewController: self)
-        _detailsViewController?.setTarget(self, action: "_hideDetails")
         
     }
     
@@ -121,8 +136,8 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
-    //MARK: private
-    private let _pictureView: PictureView = PictureView()
+    //MARK:- private
+    private var _pictureView: PictureView!
     private var _toolBar: UIToolbar!
     private var _addBarButtonItem, _cameraBarButtonItem, _compareBarButtonItem: UIBarButtonItem!
     private var _detailsViewController: DetailsViewController?

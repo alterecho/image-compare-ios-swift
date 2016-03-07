@@ -11,12 +11,11 @@ import UIKit
 class DetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, _DetailsViewProtocol {
     
     //MARK:- appearance 
-    func show(inViewController vc: PictureViewController) {
+    func show(metaData metaData:[NSObject: AnyObject], inViewController vc: PictureViewController) {
         
         vc.addChildViewController(self)
         self.view.alpha = 0.0
         vc.view.addSubview(self.view)
-        
         
         UIView.animateWithDuration(0.25, animations: { () -> Void in
             self.view.alpha = 1.0

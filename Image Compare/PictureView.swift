@@ -7,24 +7,38 @@
 //
 
 import UIKit
+import ImageIO
+import AssetsLibrary
 
 /*
     View which holds an imageview, and allows panning and rotation of the imageview
 */
 class PictureView: UIView {
     
-    var image: UIImage? {
-        get {
-            return _imageView.image
+    /* 
+        extracts relevant data (image and metadata) from an info dictionary.
+        set the info from the UIImagePickerController delegate method.
+    */
+    func set(imagePickerControllerMediaInfo info: [String: AnyObject]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self._imageView.image = image
+            self._imageView.sizeToFit()
         }
         
-        set(newImage) {
-            _imageView.image = newImage
-            _imageView.sizeToFit()
+        if let url = info[UIImagePickerControllerReferenceURL] as? NSURL {
+            let assetsLibrary = ALAssetsLibrary()
+            assetsLibrary.assetForURL(url, resultBlock: { (asset: ALAsset!) -> Void in
+                let assetRepresentation: ALAssetRepresentation = asset.defaultRepresentation()
+                self.metaData = assetRepresentation.metadata()
+                }, failureBlock: { (error: NSError!) -> Void in
+                    
+            })
         }
     }
     
-    var toolBarHeight: CGFloat = 0.0
+
+    private(set) var metaData: [NSObject: AnyObject]?
+    var toolBarHeight: CGFloat = 0.0    // * is changed by PictureViewController, when it's frame property is set
     
     
 
@@ -175,6 +189,7 @@ class PictureView: UIView {
         
         return f1
     }
+    
     
     
 }

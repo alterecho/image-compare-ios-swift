@@ -9,7 +9,12 @@
 import UIKit
 import MobileCoreServices
 
+/* 
+     The core view controller that handles picking of image, and other operations
+*/
 class PictureViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    let toolbarHeight: CGFloat = 44.0
     
     // * manage frame of self.view, toolbar
     var frame: CGRect {
@@ -20,29 +25,31 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         set(value) {
             self.view.frame = value
-            self.toolBar.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, 44.0)
+            self._toolBar.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, 44.0)
+            self._pictureView.toolBarHeight = self._toolBar.frame.size.height
         }
     }
     
     override func loadView() {
-        self.view = pictureView
+        self.view = _pictureView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // * toolbar
-        self.toolBar = UIToolbar(frame: CGRectMake(0.0, 0.0, 0.0, 0.0))
-        self.view.addSubview(toolBar)
+        self._toolBar = UIToolbar(frame: CGRectMake(0.0, 0.0, 0.0, 0.0))
+        self._toolBar.alpha = 0.25
+        self.view.addSubview(_toolBar)
         
         // * toolbar items
-        addBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addButtonAction:")
-        cameraBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "cameraButtonAction:")
-        compareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Bookmarks, target: self, action: "compareButtonAction:")
+        _addBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addButtonAction:")
+        _cameraBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "cameraButtonAction:")
+        _compareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Bookmarks, target: self, action: "compareButtonAction:")
         
         let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         
-        self.toolBar.setItems([addBarButtonItem, flexibleSpaceBarButtonItem, cameraBarButtonItem, flexibleSpaceBarButtonItem, compareBarButtonItem], animated: false)
+        self._toolBar.setItems([_addBarButtonItem, flexibleSpaceBarButtonItem, _cameraBarButtonItem, flexibleSpaceBarButtonItem, _compareBarButtonItem], animated: false)
         
     }
     
@@ -61,18 +68,18 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK: UIImagePickerControllerDelegate
+    //MARK:- UIImagePickerControllerDelegate
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         let obj = info[UIImagePickerControllerOriginalImage]
         if let image = obj as? UIImage {
-            pictureView.image = image
+            _pictureView.image = image
         }
         
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
     
-    //MARK: actions
+    //MARK:- actions
     @IBAction func addButtonAction(button: UIBarButtonItem) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -94,12 +101,30 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @IBAction func compareButtonAction(button: UIBarButtonItem) {
+        self._showDetails()
+    }
+    
+    private func _showDetails() {
+        if _detailsViewController == nil {
+            _detailsViewController = DetailsViewController(pictureViewController: self)
+        }
+        
+        _detailsViewController?.show(inViewController: self)
+        _detailsViewController?.setTarget(self, action: "_hideDetails")
         
     }
     
+    /* not private, because it's used from outside (as action of bar button item) */
+    func _hideDetails() {
+        if let vc = _detailsViewController {
+            vc.dismiss()
+        }
+    }
+    
     //MARK: private
-    private let pictureView: PictureView = PictureView()
-    private var toolBar: UIToolbar!
-    private var addBarButtonItem, cameraBarButtonItem, compareBarButtonItem: UIBarButtonItem!
+    private let _pictureView: PictureView = PictureView()
+    private var _toolBar: UIToolbar!
+    private var _addBarButtonItem, _cameraBarButtonItem, _compareBarButtonItem: UIBarButtonItem!
+    private var _detailsViewController: DetailsViewController?
 
 }

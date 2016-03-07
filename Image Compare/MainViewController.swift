@@ -8,6 +8,9 @@
 
 import UIKit
 
+/*
+    View controller that displays two child view controllers, that are responsible for the core image operations
+*/
 class MainViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -17,12 +20,11 @@ class MainViewController: UIViewController {
         
         pictureViewController1 = PictureViewController()
         pictureViewController2 = PictureViewController()
+        pictureViewController1.view.backgroundColor = UIColor.yellowColor()
         pictureViewController1?.view.frame = CGRectMake(0.0, 20.0, self.view.frame.size.width, self.view.frame.size.height * 0.5)
         pictureViewController2?.view.frame = CGRectMake(
-            0.0,
-            pictureViewController1!.view.frame.origin.y + pictureViewController1!.view.frame.size.height,
-            self.view.frame.size.width,
-            self.view.frame.size.height * 0.5)
+            0.0, pictureViewController1!.view.frame.origin.y + pictureViewController1!.view.frame.size.height,
+            self.view.frame.size.width, self.view.frame.size.height * 0.5)
         
         self.addChildViewController(pictureViewController1!)
         self.addChildViewController(pictureViewController2!)

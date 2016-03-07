@@ -24,6 +24,8 @@ class PictureView: UIView {
         }
     }
     
+    var toolBarHeight: CGFloat = 0.0
+    
     
 
     convenience init() {
@@ -142,8 +144,37 @@ class PictureView: UIView {
     
     private func reset() {
         _imageView.transform = CGAffineTransformMakeRotation(0.0)
-        _imageView.sizeToFit()
-        _imageView.center = CGPointMake(self.frame.size.width * 0.5, self.frame.size.height * 0.5)
+        
+        if (_imageView.frame.size.width != _imageView.image?.size.width) {
+            _imageView.sizeToFit()
+        } else {
+            _imageView.frame = self.rectFittingRectInRect(rect: _imageView.frame, containingRect: self.frame, inset: UIEdgeInsetsMake(toolBarHeight, 0.0, 0.0, 0.0))
+            return
+        }
+        
+        
+        _imageView.center = CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5)
         
     }
+    
+    private func rectFittingRectInRect(var rect f1: CGRect, var containingRect f2: CGRect, inset: UIEdgeInsets) -> CGRect {
+        f2.origin.x += inset.left
+        f2.origin.y += inset.top
+        f2.size.width -= (inset.left + inset.right)
+        f2.size.height -= (inset.top + inset.bottom)
+        
+        if f1.size.width > f2.size.width {
+            f1.size.height *= (f2.size.width / f1.size.width)
+            f1.size.width = f2.width
+        }
+        
+        if f1.size.height > f2.size.height {
+            f1.size.width *= (f2.size.height / f1.size.height)
+            f1.size.height = f2.size.height
+        }
+        
+        return f1
+    }
+    
+    
 }

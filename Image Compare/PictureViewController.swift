@@ -43,17 +43,18 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         // * toolbar
         self._toolBar = UIToolbar(frame: CGRectMake(0.0, 0.0, 0.0, 0.0))
-        self._toolBar.alpha = 0.25
         self.view.addSubview(_toolBar)
         
         // * toolbar items
         _addBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addButtonAction:")
         _cameraBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "cameraButtonAction:")
-        _compareBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Bookmarks, target: self, action: "compareButtonAction:")
+        _detailsBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Bookmarks, target: self, action: "compareButtonAction:")
+        
+        _cancelBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Plain, target: self, action: "_hideDetails")
         
         let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         
-        self._toolBar.setItems([_addBarButtonItem, flexibleSpaceBarButtonItem, _cameraBarButtonItem, flexibleSpaceBarButtonItem, _compareBarButtonItem], animated: false)
+        self._toolBar.setItems([_addBarButtonItem, flexibleSpaceBarButtonItem, _cameraBarButtonItem, flexibleSpaceBarButtonItem, _detailsBarButtonItem], animated: false)
         
     }
     
@@ -116,6 +117,9 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
             
             _detailsViewController?.show(metaDataSet: metaData, inViewController: self)
             _detailsViewController?.setTarget(self, action: "_hideDetails")
+            
+            let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            _toolBar.setItems([flexibleSpaceBarButtonItem, _cancelBarButtonItem], animated: true)
         }
         
         
@@ -125,13 +129,15 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
     func _hideDetails() {
         if let vc = _detailsViewController {
             vc.dismiss()
+            let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+            _toolBar.setItems([_addBarButtonItem, flexibleSpaceBarButtonItem, _cameraBarButtonItem, flexibleSpaceBarButtonItem, _detailsBarButtonItem], animated: true)
         }
     }
     
     //MARK:- private
     private var _pictureView: PictureView!
     private var _toolBar: UIToolbar!
-    private var _addBarButtonItem, _cameraBarButtonItem, _compareBarButtonItem: UIBarButtonItem!
+    private var _addBarButtonItem, _cameraBarButtonItem, _detailsBarButtonItem, _cancelBarButtonItem: UIBarButtonItem!
     private var _detailsViewController: DetailsViewController?
 
 }

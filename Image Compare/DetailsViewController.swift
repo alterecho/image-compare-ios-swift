@@ -71,18 +71,15 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
                 // * the frames according to the type of device
             
             if screenSize.height < 736 {    // * less than iPhone 6s plus
-                self.view.frame = CGRectMake(0.0, 0.0, screenSize.width, screenSize.height * 0.5)
+                let pvcs = pvc.view.frame.size
+                self.view.frame = CGRectMake(0.0, _toolbarHeight, pvcs.width, pvcs.height - _toolbarHeight)
                 let s = self.view.frame.size
-                toolBar = UIToolbar(frame: CGRectMake(0.0, 0.0, s.width, 44.0))
-                _cancelButton = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Plain, target: self, action: "dismiss")
-                toolBar.setItems([_cancelButton!], animated: false)
                 
                 tableView.frame = CGRectMake(
-                    0.0, toolBar.frame.origin.y + toolBar.frame.size.height,
-                    s.width, s.height - (toolBar.frame.origin.y + toolBar.frame.size.height)
+                    0.0, 0.0,
+                    s.width, s.height
                 )
                 
-                self.view.addSubview(toolBar)
                 
             } else {
                 let pvcs = pvc.view.frame.size
@@ -140,7 +137,6 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
     
     //MARK:- private
     private var _detailsTableViewController: DetailsTableViewController!
-    private var toolBar: UIToolbar!
     private var _cancelButton: UIBarButtonItem?
     private var _toolbarHeight: CGFloat = 44.0 // * toolbar height of the parent view controller
     
@@ -164,6 +160,9 @@ private protocol _DetailsViewProtocol: class {
 }
 
 //MARK:- _DetailsView -
+/*
+    View to find out of view touches
+*/
 private class _DetailsView: UIView {
     weak var delegate: _DetailsViewProtocol?
     

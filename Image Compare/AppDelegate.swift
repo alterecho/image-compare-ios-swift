@@ -16,7 +16,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        let d1: [NSObject: AnyObject] = ["k1" : "v1", "key2" : "i want only sons"]
+        let d2: NSMutableDictionary = NSMutableDictionary()
+        
+        
+        //TODO: remove
+        d2.setObject("king of the hill", forKey:"k1")
+        d2.setObject("lion in the jungle", forKey:"key2")
+        for k in d1 {
+            print(k.dynamicType)
+        }
+        
+        for k in d2 {
+            print(k.dynamicType)
+        }
+        
+        var element: (AnyObject, AnyObject)
+        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = MainViewController()
         window?.makeKeyAndVisible();

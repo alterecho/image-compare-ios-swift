@@ -75,18 +75,9 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
     //MARK:- UIImagePickerControllerDelegate
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        self._pictureView.set(imagePickerControllerMediaInfo: info)
-        if let url = info[UIImagePickerControllerReferenceURL] as? NSURL {
-            
-            let assetsLibrary = ALAssetsLibrary()
-            assetsLibrary.assetForURL(url, resultBlock: { (asset) -> Void in
-                let assetRepresentation: ALAssetRepresentation = asset.defaultRepresentation()
-                let metaData = assetRepresentation.metadata()
-                }, failureBlock: { (error) -> Void in
-                    print(error)
-            })
-        }
+            // * the pictureView will extract the image and metadata
         
+        self._pictureView.set(imagePickerControllerMediaInfo: info)
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -117,12 +108,13 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     private func _showDetails() {
-        if let metaData = _pictureView.metaData {
+        if let metaData = _pictureView.metaDataSet {
+            
             if _detailsViewController == nil {
                 _detailsViewController = DetailsViewController(pictureViewController: self)
             }
             
-            _detailsViewController?.show(metaData: metaData, inViewController: self)
+            _detailsViewController?.show(metaDataSet: metaData, inViewController: self)
             _detailsViewController?.setTarget(self, action: "_hideDetails")
         }
         

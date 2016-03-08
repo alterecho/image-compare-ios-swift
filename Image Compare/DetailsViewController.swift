@@ -8,10 +8,10 @@
 
 import UIKit
 
-class DetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, _DetailsViewProtocol {
+class DetailsViewController: UIViewController, _DetailsViewProtocol {
     
     //MARK:- appearance 
-    func show(metaData metaData:[NSObject: AnyObject], inViewController vc: PictureViewController) {
+    func show(metaDataSet metaDataSet: MetaDataSet, inViewController vc: PictureViewController) {
         
         vc.addChildViewController(self)
         self.view.alpha = 0.0
@@ -20,7 +20,8 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
         UIView.animateWithDuration(0.25, animations: { () -> Void in
             self.view.alpha = 1.0
             }) { (completed) -> Void in
-                
+                self._detailsTableViewController.tableData = metaDataSet
+                self._detailsTableViewController.tableView.reloadData()
         }
     }
     
@@ -61,16 +62,26 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
             
             self.view.backgroundColor = UIColor.yellowColor()
             
-            // * the frames according to the type of device
+                // * initialize the details table controller
+            
+            _detailsTableViewController = DetailsTableViewController()
+            let tableView = _detailsTableViewController.tableView
+            self.view.addSubview(tableView)
+            
+                // * the frames according to the type of device
+            
             if screenSize.height < 736 {    // * less than iPhone 6s plus
                 self.view.frame = CGRectMake(0.0, 0.0, screenSize.width, screenSize.height * 0.5)
                 let s = self.view.frame.size
                 toolBar = UIToolbar(frame: CGRectMake(0.0, 0.0, s.width, 44.0))
                 _cancelButton = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Plain, target: self, action: "dismiss")
                 toolBar.setItems([_cancelButton!], animated: false)
-                tableView = UITableView(frame: CGRectMake(0.0, toolBar.frame.origin.y + toolBar.frame.size.height,
-                    s.width, s.height - (toolBar.frame.origin.y + toolBar.frame.size.height)))
-                self.view.addSubview(tableView)
+                
+                tableView.frame = CGRectMake(
+                    0.0, toolBar.frame.origin.y + toolBar.frame.size.height,
+                    s.width, s.height - (toolBar.frame.origin.y + toolBar.frame.size.height)
+                )
+                
                 self.view.addSubview(toolBar)
                 
             } else {
@@ -82,8 +93,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
                     pvcs.height * 0.75
                 )
                 let s = self.view.frame.size
-                tableView = UITableView(frame: CGRectMake(0.0, 0.0, s.width, s.height))
-                self.view.addSubview(tableView)
+                tableView.frame = CGRectMake(0.0, 0.0, s.width, s.height)
             }
         }
         
@@ -129,10 +139,9 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
     
     
     //MARK:- private
-    private var tableView: UITableView!
+    private var _detailsTableViewController: DetailsTableViewController!
     private var toolBar: UIToolbar!
     private var _cancelButton: UIBarButtonItem?
-    private var _parentViewController: UIViewController?
     private var _toolbarHeight: CGFloat = 44.0 // * toolbar height of the parent view controller
     
     private func detailsViewClickedOutside(view: _DetailsView) {

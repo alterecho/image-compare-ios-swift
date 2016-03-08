@@ -29,7 +29,7 @@ class PictureView: UIView {
             let assetsLibrary = ALAssetsLibrary()
             assetsLibrary.assetForURL(url, resultBlock: { (asset: ALAsset!) -> Void in
                 let assetRepresentation: ALAssetRepresentation = asset.defaultRepresentation()
-                self.metaData = assetRepresentation.metadata()
+                self.metaDataSet = MetaDataSet(dictionary: assetRepresentation.metadata())
                 }, failureBlock: { (error: NSError!) -> Void in
                     
             })
@@ -37,7 +37,7 @@ class PictureView: UIView {
     }
     
 
-    private(set) var metaData: [NSObject: AnyObject]?
+    private(set) var metaDataSet: MetaDataSet?
     var toolBarHeight: CGFloat = 0.0    // * is changed by PictureViewController, when it's frame property is set
     
     

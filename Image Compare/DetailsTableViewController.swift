@@ -36,12 +36,27 @@ class DetailsTableViewController: UITableViewController {
         }
         return 0
     }
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44.0
+    }
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return tableData?[section].typeName
+    }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let metaData = tableData?[section] {
             return metaData.count
         }
         return 0
+    }
+    
+    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let headerView = view as! UITableViewHeaderFooterView
+        headerView.contentView.backgroundColor = UIColor.redColor()
+        headerView.textLabel?.textAlignment = NSTextAlignment.Center
+        
+        
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

@@ -19,6 +19,7 @@ class MetaData : CustomDebugStringConvertible {
         }
         
         typeName = el.0 as! String
+        typeName = typeName.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "{}"))
         for el in el.1 as! [String : AnyObject] {
             let element = MetaDataElement(title:el.0, value: el.1)
             data.append(element)

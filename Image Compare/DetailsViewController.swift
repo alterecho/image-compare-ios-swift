@@ -34,10 +34,11 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
         }
     }
     
-    
-    func setTarget(target: AnyObject, action: Selector) {
-        _cancelButton?.target = target
-        _cancelButton?.action = action
+    /* set the method, and it's instance, to be called to dismiss this view controller (when clicked outside) */
+    func set(dismissTarget dismissTarget: AnyObject, action: (() -> Void)) {
+        _dismissTarget = dismissTarget
+        _dismissAction = action
+        
     }
     
     init(pictureViewController: PictureViewController) {
@@ -137,14 +138,18 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
     
     //MARK:- private
     private var _detailsTableViewController: DetailsTableViewController!
-    private var _cancelButton: UIBarButtonItem?
     private var _toolbarHeight: CGFloat = 44.0 // * toolbar height of the parent view controller
+    private var _dismissTarget: AnyObject? // * an instance that handles the dismissal of this controller (called for out-of-view touches)
+    //private var _dismissAction: Selector? // * the selector that handles the dismissal of this controller (called for out-of-view touches)
+    private var _dismissAction: (() -> Void)?
     
     private func detailsViewClickedOutside(view: _DetailsView) {
         // * close the details window
         //self.view.removeFromSuperview()
         print("detailsView clicked outside")
-        self.dismiss()
+        if let action = _dismissAction {
+            action()
+        }
         
     }
     

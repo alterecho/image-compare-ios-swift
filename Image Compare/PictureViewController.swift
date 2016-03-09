@@ -116,7 +116,7 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
             }
             
             _detailsViewController?.show(metaDataSet: metaData, inViewController: self)
-            _detailsViewController?.setTarget(self, action: "_hideDetails")
+            _detailsViewController?.set(dismissTarget: self, action: _hideDetails)
             
             let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             _toolBar.setItems([flexibleSpaceBarButtonItem, _cancelBarButtonItem], animated: true)

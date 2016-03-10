@@ -79,7 +79,8 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
             
                 // * the frames according to the type of device
             
-            if screenSize.height < 736 {    // * less than iPhone 6s plus
+            if screenSize.height < 736 {    // * less than iPhone 6 plus
+                
                 let pvcs = pvc.view.frame.size
                 self.view.frame = CGRectMake(0.0, _toolbarHeight, pvcs.width, pvcs.height - _toolbarHeight)
                 let s = self.view.frame.size
@@ -88,13 +89,12 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
                     0.0, 0.0,
                     s.width, s.height
                 )
-                
-                
             } else {
-                let pvcs = pvc.view.frame.size
+                
+                let pvcs = CGSizeMake(pvc.view.frame.size.width, pvc.view.frame.size.height - _toolbarHeight)
                 self.view.frame = CGRectMake(
                     pvcs.width * 0.5 - pvcs.width * 0.75 * 0.5,
-                    pvcs.height * 0.5 - pvcs.height * 0.75 * 0.5,
+                    pvcs.height * 0.5 - pvcs.height * 0.75 * 0.5 + _toolbarHeight,
                     pvcs.width * 0.75,
                     pvcs.height * 0.75
                 )

@@ -15,7 +15,7 @@ import AssetsLibrary
 */
 class PictureViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    let toolbarHeight: CGFloat = 44.0
+    let toolbarHeight: CGFloat = c_TOOL_BAR_HEIGHT
     
     // * manage frame of self.view, toolbar
     var frame: CGRect {
@@ -26,7 +26,7 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         set(value) {
             self.view.frame = value
-            self._toolBar.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, 44.0)
+            self._toolBar.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, c_TOOL_BAR_HEIGHT)
             self._pictureView.toolBarHeight = self._toolBar.frame.size.height
         }
     }

@@ -138,7 +138,7 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
     
     //MARK:- private
     private var _detailsTableViewController: DetailsTableViewController!
-    private var _toolbarHeight: CGFloat = 44.0 // * toolbar height of the parent view controller
+    private var _toolbarHeight: CGFloat = c_TOOL_BAR_HEIGHT // * toolbar height of the parent view controller
     private var _dismissTarget: AnyObject? // * an instance that handles the dismissal of this controller (called for out-of-view touches)
     //private var _dismissAction: Selector? // * the selector that handles the dismissal of this controller (called for out-of-view touches)
     private var _dismissAction: (() -> Void)?

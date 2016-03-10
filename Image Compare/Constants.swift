@@ -9,4 +9,5 @@
 import Foundation
 import CoreGraphics
 
-let STATUS_BAR_HEIGHT: CGFloat = 20.0
+let c_STATUS_BAR_HEIGHT: CGFloat = 20.0
+let c_TOOL_BAR_HEIGHT = 44.0 as CGFloat

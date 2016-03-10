@@ -105,7 +105,7 @@ class PictureView: UIView {
             originalPosition = _imageView.center
         } else if gesture.state == UIGestureRecognizerState.Ended {
         } else {
-            if let tp = touchPoint {
+            if let _ = touchPoint {
                 _imageView.center = CGPointMake(originalPosition.x + t.x, originalPosition.y + t.y)
             }
             
@@ -144,17 +144,16 @@ class PictureView: UIView {
     }
     
     
-    private var _panGesture: UIPanGestureRecognizer?
-    private var _rotationGesture: UIRotationGestureRecognizer?
-    private var _tapGesture: UITapGestureRecognizer?
-    private var _pinchGesture: UIPinchGestureRecognizer?
+    private var _panGesture: UIPanGestureRecognizer?            // * to move the image
+    private var _rotationGesture: UIRotationGestureRecognizer?  // * to rotate image with two fingers
+    private var _tapGesture: UITapGestureRecognizer?            // * double tap picture size toggle (fit to screen, max size)
+    private var _pinchGesture: UIPinchGestureRecognizer?        // * pinch zoom
     
-    private let _imageView: UIImageView = UIImageView()
-    private var originalPosition: CGPoint = CGPointZero
-    private var touchPoint: CGPoint?
-    private var touchDiff: CGPoint = CGPointZero
-    private var _initialFrame: CGRect = CGRectZero // * used to calculate image frame, for pinch gesture
-    private var _initialAngle: CGFloat = 0.0 // * used for rotation gesture
+    private let _imageView: UIImageView = UIImageView()     // * the image container
+    private var originalPosition: CGPoint = CGPointZero     // * to move the image according to touch location inside (natural pan)
+    private var touchPoint: CGPoint?                        // * the point of first touch
+    private var _initialFrame: CGRect = CGRectZero          // * used to calculate image frame, for pinch gesture
+    private var _initialAngle: CGFloat = 0.0                // * used for rotation gesture
     
     private func reset() {
         _imageView.transform = CGAffineTransformMakeRotation(0.0)
@@ -163,11 +162,10 @@ class PictureView: UIView {
             _imageView.sizeToFit()
         } else {
             _imageView.frame = self.rectFittingRectInRect(rect: _imageView.frame, containingRect: self.frame, inset: UIEdgeInsetsMake(toolBarHeight, 0.0, 0.0, 0.0))
-            return
         }
         
         
-        _imageView.center = CGPointMake(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5)
+        _imageView.center = CGPointMake(self.bounds.size.width * 0.5, toolBarHeight + (self.bounds.size.height - toolBarHeight) * 0.5)
         
     }
     

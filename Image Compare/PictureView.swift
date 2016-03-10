@@ -10,12 +10,12 @@ import UIKit
 import ImageIO
 import AssetsLibrary
 
-/*
-    View which holds an imageview, and allows panning and rotation of the imageview
-*/
+/** 
+    View which holds an imageview, and allows panning and rotation of the imageview 
+ */
 class PictureView: UIView {
     
-    /* 
+    /**
         extracts relevant data (image and metadata) from an info dictionary.
         set the info from the UIImagePickerController delegate method.
     */
@@ -36,14 +36,17 @@ class PictureView: UIView {
         }
     }
     
-
+    /** the metadata of the image is retrieved, when the image */
     private(set) var metaDataSet: MetaDataSet?
-    var toolBarHeight: CGFloat = 0.0    // * is changed by PictureViewController, when it's frame property is set
+    
+    /** is changed by PictureViewController, when it's frame property is set */
+    var toolBarHeight: CGFloat = 0.0
     
     
 
     convenience init() {
         self.init(frame: CGRectZero)
+        
     }
     
     override init(frame: CGRect) {

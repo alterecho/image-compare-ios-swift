@@ -27,6 +27,9 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         set(value) {
             self.view.frame = value
             self._toolBar.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, c_TOOL_BAR_HEIGHT)
+            _toolBar.barTintColor = UIColor.blackColor()
+            _toolBar.tintColor = UIColor.whiteColor()
+            _toolBar.translucent = true
             self._pictureView.toolBarHeight = self._toolBar.frame.size.height
         }
     }

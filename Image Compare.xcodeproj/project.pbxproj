@@ -21,6 +21,7 @@
 		5F6025591C8708FE00EACB29 /* Image_CompareUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6025581C8708FE00EACB29 /* Image_CompareUITests.swift */; };
 		5FC9ED5E1C87502C00F4D24D /* PictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC9ED5D1C87502C00F4D24D /* PictureViewController.swift */; };
 		5FC9ED601C8846E300F4D24D /* PictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC9ED5F1C8846E300F4D24D /* PictureView.swift */; };
+		5FF88CBB1C91798800F0B6E1 /* TableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF88CBA1C91798800F0B6E1 /* TableViewHeaderFooterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		5F60255A1C8708FE00EACB29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5FC9ED5D1C87502C00F4D24D /* PictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureViewController.swift; sourceTree = "<group>"; };
 		5FC9ED5F1C8846E300F4D24D /* PictureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureView.swift; sourceTree = "<group>"; };
+		5FF88CBA1C91798800F0B6E1 /* TableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				5FC9ED5F1C8846E300F4D24D /* PictureView.swift */,
 				5F13E99E1C8AC5E9005AD286 /* DetailsViewController.swift */,
 				5F13E9A21C8E5C90005AD286 /* DetailsTableViewController.swift */,
+				5FF88CBA1C91798800F0B6E1 /* TableViewHeaderFooterView.swift */,
 				5F13E9A41C8E717E005AD286 /* MetaData.swift */,
 				5F13E9A81C8E7CC8005AD286 /* MetaDataElement.swift */,
 				5F13E9A61C8E7CB7005AD286 /* MetaDataSet.swift */,
@@ -284,6 +287,7 @@
 				5F6025391C8708FD00EACB29 /* AppDelegate.swift in Sources */,
 				5F13E9EA1C8EDB58005AD286 /* Constants.swift in Sources */,
 				5FC9ED601C8846E300F4D24D /* PictureView.swift in Sources */,
+				5FF88CBB1C91798800F0B6E1 /* TableViewHeaderFooterView.swift in Sources */,
 				5F13E9A31C8E5C90005AD286 /* DetailsTableViewController.swift in Sources */,
 				5F13E99F1C8AC5E9005AD286 /* DetailsViewController.swift in Sources */,
 				5F13E9A51C8E717E005AD286 /* MetaData.swift in Sources */,

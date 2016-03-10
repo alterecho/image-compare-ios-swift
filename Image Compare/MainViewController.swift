@@ -16,7 +16,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.blackColor()
         
         pictureViewController1 = PictureViewController()
         pictureViewController2 = PictureViewController()
@@ -64,6 +64,10 @@ class MainViewController: UIViewController {
             }) { (context) -> Void in
                 
         }
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     private var pictureViewController1, pictureViewController2: PictureViewController!

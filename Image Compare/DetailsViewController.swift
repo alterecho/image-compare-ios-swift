@@ -8,9 +8,16 @@
 
 import UIKit
 
+/** 
+    Displays the image metadata. Changes layout according to device / screen size.
+*/
 class DetailsViewController: UIViewController, _DetailsViewProtocol {
     
-    //MARK:- appearance 
+    /**
+     Sets the metadata to be displayed
+     - parameters:
+        - metaDataSet: the MetaDataSet object to be displayed
+     */
     func show(metaDataSet metaDataSet: MetaDataSet, inViewController vc: PictureViewController) {
         
         vc.addChildViewController(self)
@@ -25,6 +32,7 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
         }
     }
     
+    /** dismisses the view controller */
     func dismiss() {
         UIView.animateWithDuration(0.25, animations: { () -> Void in
             self.view.alpha = 0.0
@@ -34,7 +42,7 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
         }
     }
     
-    /* set the method, and it's instance, to be called to dismiss this view controller (when clicked outside) */
+    /** sets the method, and it's instance, to be called to dismiss this view controller (when clicked outside) */
     func set(dismissTarget dismissTarget: AnyObject, action: (() -> Void)) {
         _dismissTarget = dismissTarget
         _dismissAction = action
@@ -61,7 +69,7 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
         if let pvc = self.parentViewController {
             let screenSize = UIScreen.mainScreen().bounds.size
             
-            self.view.backgroundColor = UIColor.yellowColor()
+            self.view.backgroundColor = UIColor.clearColor()
             
                 // * initialize the details table controller
             

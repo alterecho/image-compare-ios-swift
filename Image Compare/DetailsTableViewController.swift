@@ -21,6 +21,10 @@ class DetailsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: CELL_ID)
+        self.tableView.registerClass(TableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: HEADER_ID)
+        
+        self.tableView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+        self.tableView.separatorColor = UIColor.whiteColor()
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,9 +44,9 @@ class DetailsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 44.0
     }
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return tableData?[section].typeName
-    }
+//    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return tableData?[section].typeName
+//    }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let metaData = tableData?[section] {
@@ -51,11 +55,23 @@ class DetailsTableViewController: UITableViewController {
         return 0
     }
     
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let ret = tableView.dequeueReusableHeaderFooterViewWithIdentifier(HEADER_ID)
+        return ret
+    }
+    
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let headerView = view as! UITableViewHeaderFooterView
-        headerView.contentView.backgroundColor = UIColor.redColor()
-        headerView.textLabel?.textAlignment = NSTextAlignment.Center
         
+        let headerView = view as! TableViewHeaderFooterView
+        //headerView.contentView.backgroundColor = UIColor.clearColor()
+        //return
+        //let headerView = view as! TableViewHeaderFooterView
+        headerView.titleLabel.text = tableData?[section].typeName
+        return
+        //headerView.contentView.backgroundColor = COLOR_THEME
+        
+        //headerView.textLabel?.textAlignment = NSTextAlignment.Center
+        //headerView.textLabel?.textColor = COLOR_THEME_HIGHLIGHT
         
     }
     
@@ -67,11 +83,14 @@ class DetailsTableViewController: UITableViewController {
             cell.detailTextLabel?.text = metaDataElement.valueString
             
         }
+        cell.backgroundColor = UIColor.clearColor()
+        cell.textLabel?.textColor = COLOR_THEME_HIGHLIGHT
         
         return cell
     }
     
     private let CELL_ID = "cell"
+    private let HEADER_ID = "header"
 
    
 }

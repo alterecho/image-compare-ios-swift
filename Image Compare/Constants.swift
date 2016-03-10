@@ -8,6 +8,10 @@
 
 import Foundation
 import CoreGraphics
+import UIKit
 
-let c_STATUS_BAR_HEIGHT: CGFloat = 20.0
-let c_TOOL_BAR_HEIGHT = 44.0 as CGFloat
+let c_STATUS_BAR_HEIGHT: CGFloat = 20.0     // * the bar at the top of the screen
+let c_TOOL_BAR_HEIGHT = 44.0 as CGFloat     // * the bar at the top of each window
+
+let COLOR_THEME = UIColor.blackColor()
+let COLOR_THEME_HIGHLIGHT = UIColor.whiteColor()

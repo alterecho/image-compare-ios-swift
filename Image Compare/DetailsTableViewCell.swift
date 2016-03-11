@@ -13,7 +13,28 @@ class DetailsTableViewCell: UITableViewCell {
         didSet {
             _titleLabel.text = metaDataElement?.title.stringByAppendingString(":")
             _valueLabel.text = metaDataElement?.value as? String
-            _deltaLabel.text = "\(metaDataElement?.delta)"
+            
+            if let delta = metaDataElement?.delta {
+                
+                if delta > 0 {
+                    
+                    _deltaLabel.text = "(+\(metaDataElement!.delta))"
+                    _deltaLabel.textColor = _COLOR_GREATER
+                } else if delta < 0 {
+                    
+                    _deltaLabel.text = "(-\(metaDataElement?.delta))"
+                    _deltaLabel.textColor = _COLOR_LESSER
+                } else if delta == 0 {
+                    
+                    _deltaLabel.text = "\(metaDataElement?.delta)"
+                    _deltaLabel.textColor = _COLOR_EQUAL
+                }
+            } else {
+                
+                _deltaLabel.text = nil
+                _deltaLabel.textColor = _COLOR_EQUAL
+            }
+            
         }
     }
     
@@ -30,7 +51,7 @@ class DetailsTableViewCell: UITableViewCell {
     override var frame: CGRect {
         didSet {
             let padding = 5.0 as CGFloat
-            _titleLabel.frame = CGRectMake(0.0, 0.0, self.frame.size.width * 0.4, self.frame.size.height)
+            _titleLabel.frame = CGRectMake(0.0, 0.0, self.frame.size.width * 0.5, self.frame.size.height)
             
             _valueLabel.sizeToFit()
             _valueLabel.frame = CGRectMake(
@@ -51,6 +72,11 @@ class DetailsTableViewCell: UITableViewCell {
     _titleLabel = UILabel(),
     _valueLabel = UILabel(),
     _deltaLabel = UILabel()
+    
+    private let
+    _COLOR_GREATER = UIColor.greenColor(),
+    _COLOR_LESSER = UIColor.redColor(),
+    _COLOR_EQUAL = UIColor.whiteColor()
     
     /* adds the labels to this view */
     private func addSubviews() {

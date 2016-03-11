@@ -20,8 +20,8 @@ class DetailsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: CELL_ID)
-        self.tableView.registerClass(TableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: HEADER_ID)
+        self.tableView.registerClass(DetailsTableViewCell.self, forCellReuseIdentifier: CELL_ID)
+        self.tableView.registerClass(DetailsTableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: HEADER_ID)
         
         self.tableView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         self.tableView.separatorColor = UIColor.whiteColor()
@@ -62,7 +62,7 @@ class DetailsTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
-        let headerView = view as! TableViewHeaderFooterView
+        let headerView = view as! DetailsTableViewHeaderFooterView
         //headerView.contentView.backgroundColor = UIColor.clearColor()
         //return
         //let headerView = view as! TableViewHeaderFooterView
@@ -76,11 +76,12 @@ class DetailsTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(CELL_ID, forIndexPath: indexPath)
+        let cell: DetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(CELL_ID, forIndexPath: indexPath) as! DetailsTableViewCell
         if let metaData = tableData?[indexPath.section] {
-            let metaDataElement = metaData[indexPath.row]
-            cell.textLabel?.text = metaDataElement.title
-            cell.detailTextLabel?.text = metaDataElement.valueString
+            let metaDataElement = metaData[indexPath.row] as? DeltaMetaDataElement
+            //cell.textLabel?.text = metaDataElement.title
+            //cell.detailTextLabel?.text = metaDataElement.valueString
+            cell.metaDataElement = metaDataElement
             
         }
         cell.backgroundColor = UIColor.clearColor()

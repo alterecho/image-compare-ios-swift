@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TableViewHeaderFooterView: UITableViewHeaderFooterView {
+class DetailsTableViewHeaderFooterView: UITableViewHeaderFooterView {
     
     let titleLabel: UILabel = UILabel()
     let blurOverlay = UIToolbar()

@@ -10,7 +10,7 @@ import Foundation
 
 class MetaData : CustomDebugStringConvertible {
     private(set) var typeName: String = ""
-    private(set) var data: [MetaDataElement] = Array<MetaDataElement>()
+    private(set) var data: [DeltaMetaDataElement] = Array<DeltaMetaDataElement>()
     
     init?(dictionaryElement el: (NSObject, AnyObject)) {
         
@@ -21,7 +21,7 @@ class MetaData : CustomDebugStringConvertible {
         typeName = el.0 as! String
         typeName = typeName.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "{}"))
         for el in el.1 as! [String : AnyObject] {
-            let element = MetaDataElement(title:el.0, value: el.1)
+            let element = DeltaMetaDataElement(title:el.0, value: el.1)
             data.append(element)
         }
         

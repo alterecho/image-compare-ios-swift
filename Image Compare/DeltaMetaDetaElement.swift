@@ -18,7 +18,7 @@ class DeltaMetaDataElement : MetaDataElement {
     var delta: Float?
     
     
-    override init(title: String, value: Any) {
+    override init(title: String, value: AnyObject) {
         super.init(title: title, value: value)
     }
     

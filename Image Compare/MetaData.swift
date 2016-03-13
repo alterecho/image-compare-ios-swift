@@ -10,6 +10,8 @@ import Foundation
 
 class MetaData : CustomDebugStringConvertible {
     private(set) var typeName: String = ""
+    
+    /** the array of metadata elements this metadata represents. Individual elements can also be accessed through the array subscript ([]) */
     private(set) var data: [DeltaMetaDataElement] = Array<DeltaMetaDataElement>()
     
     init?(dictionaryElement el: (NSObject, AnyObject)) {

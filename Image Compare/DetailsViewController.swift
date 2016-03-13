@@ -13,6 +13,9 @@ import UIKit
 */
 class DetailsViewController: UIViewController, _DetailsViewProtocol {
     
+    /** the overlay frame that is calculated based on the screen size */
+    static var overlayFrame: CGRect = CGRectZero
+    
     /**
      Sets the metadata to be displayed
      - parameters:
@@ -73,34 +76,33 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
             
                 // * initialize the details table controller
             
-            _detailsTableViewController = DetailsTableViewController()
-            let tableView = _detailsTableViewController.tableView
-            self.view.addSubview(tableView)
+           
             
-                // * the frames according to the type of device
+                // * the view frames according to the type of device
             
+            // * set the static variable before initialzing the DetailsViewController, so that the variable can be used by the controller
             if screenSize.height < 736 {    // * less than iPhone 6 plus
                 
                 let pvcs = pvc.view.frame.size
-                self.view.frame = CGRectMake(0.0, _toolbarHeight, pvcs.width, pvcs.height - _toolbarHeight)
-                let s = self.view.frame.size
+                DetailsViewController.overlayFrame = CGRectMake(0.0, _toolbarHeight, pvcs.width, pvcs.height - _toolbarHeight)
                 
-                tableView.frame = CGRectMake(
-                    0.0, 0.0,
-                    s.width, s.height
-                )
+                
             } else {
                 
                 let pvcs = CGSizeMake(pvc.view.frame.size.width, pvc.view.frame.size.height - _toolbarHeight)
-                self.view.frame = CGRectMake(
+                DetailsViewController.overlayFrame = CGRectMake(
                     pvcs.width * 0.5 - pvcs.width * 0.75 * 0.5,
                     pvcs.height * 0.5 - pvcs.height * 0.75 * 0.5 + _toolbarHeight,
                     pvcs.width * 0.75,
                     pvcs.height * 0.75
                 )
-                let s = self.view.frame.size
-                tableView.frame = CGRectMake(0.0, 0.0, s.width, s.height)
             }
+            
+            self.view.frame = DetailsViewController.overlayFrame
+            _detailsTableViewController = DetailsTableViewController()
+            let tableView = _detailsTableViewController.tableView
+            self.view.addSubview(tableView)
+            tableView.frame = self.view.bounds
         }
         
         

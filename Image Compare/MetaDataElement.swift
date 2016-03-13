@@ -10,17 +10,31 @@ import Foundation
 
 class MetaDataElement : CustomDebugStringConvertible {
     private(set) var title, valueString: String
-    private(set) var value: Any
+    private(set) var value: AnyObject
     convenience init() {
         self.init(title: "", value: "")
     }
     
-    init(title: String, value: Any) {
+    init(title: String, value: AnyObject) {
         print("\(title)(\(title.dynamicType)): \(value)\(value.dynamicType))")
         
         self.title = title
         self.value = value
-        self.valueString = String(value)
+
+        if let array = value as? Array<NSNumber> {
+            var str = ""
+            for var i = 0; i < array.count; i++ {
+                let obj = array[i]
+                str += String(obj)
+                if (i < array.count - 1) {
+                    str += ", " // * append comma if there are more iterations
+                }
+            }
+           self.valueString = str
+        } else {
+            self.valueString = String(value)
+        }
+        
         
     }
     

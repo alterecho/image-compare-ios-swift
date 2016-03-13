@@ -10,7 +10,11 @@ import UIKit
 
 class DetailsTableViewController: UITableViewController {
     
+    
+    static var valueFrame: CGRect?
+    
     var tableData: MetaDataSet?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +46,7 @@ class DetailsTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+       
         return 44.0
     }
 //    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -53,6 +58,13 @@ class DetailsTableViewController: UITableViewController {
             return metaData.count
         }
         return 0
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if let metaData = tableData?[indexPath.section] {
+            return DetailsTableViewCell.heightForMetaDataElement(metaDataElement: metaData[indexPath.row])
+        }
+        return 44.0
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

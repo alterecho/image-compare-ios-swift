@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  Image Compare
+
+  Created by Vijay Chandran J on 14/03/16.
+  Copyright © 2016 Vijay Chandran J. All rights reserved.
+*/
+"close" = "Close";
+"no_metadata" = "No meta-data found for image";

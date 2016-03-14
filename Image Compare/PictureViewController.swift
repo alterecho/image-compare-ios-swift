@@ -53,7 +53,7 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         _cameraBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "cameraButtonAction:")
         _detailsBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Bookmarks, target: self, action: "compareButtonAction:")
         
-        _cancelBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Plain, target: self, action: "_hideDetails")
+        _cancelBarButtonItem = UIBarButtonItem(title: NSLocalizedString("close".localized, comment: "nil"), style: UIBarButtonItemStyle.Plain, target: self, action: "_hideDetails")
         
         let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
         

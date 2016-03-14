@@ -43,7 +43,11 @@ class MainViewController: UIViewController {
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator);
+        if #available(iOS 8.0, *) {
+            super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        } else {
+            // Fallback on earlier versions
+        };
         coordinator.animateAlongsideTransition({ (context) -> Void in
             
             
@@ -65,6 +69,29 @@ class MainViewController: UIViewController {
                 
         }
     }
+    
+    /* iOS 7 and below */
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        super.willRotateToInterfaceOrientation(toInterfaceOrientation, duration: duration)
+        if toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight {
+            
+            // * landscape
+            let ss = UIScreen.mainScreen().bounds.size
+            let size = CGSizeMake(ss.height, ss.width)
+            self.pictureViewController1.frame = CGRectMake(0.0, self.statusBarHeight, size.width * 0.5, size.height);
+            self.pictureViewController2.frame = CGRectMake(size.width * 0.5, self.statusBarHeight, size.width * 0.5, size.height)
+        } else {
+            
+            // * portrait
+            let ss = UIScreen.mainScreen().bounds.size
+            let size = CGSizeMake(ss.width, ss.height)
+            self.pictureViewController1.frame = CGRectMake(0.0, self.statusBarHeight, size.width, size.height * 0.5)
+            self.pictureViewController2.frame = CGRectMake(0.0,
+                self.pictureViewController1.frame.origin.y + self.pictureViewController1.frame.size.height,
+                size.width, size.height * 0.5)
+        }
+    }
+    
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent

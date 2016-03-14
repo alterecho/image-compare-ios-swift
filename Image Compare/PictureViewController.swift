@@ -112,7 +112,7 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     private func _showDetails() {
-        if let metaData = _pictureView.metaDataSet {
+        if let metaData = _pictureView.metaDataSet {    //* image has metadata
             
             if _detailsViewController == nil {
                 _detailsViewController = DetailsViewController(pictureViewController: self)
@@ -123,6 +123,23 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
             
             let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
             _toolBar.setItems([flexibleSpaceBarButtonItem, _cancelBarButtonItem], animated: true)
+        } else {        // * image has no metadata. show alert
+            if #available(iOS 8.0, *) {
+              
+                let alertController = UIAlertController(title: "error".localized, message: "no_metadata".localized, preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "ok".localized, style: UIAlertActionStyle.Default, handler: { (alertAction) -> Void in
+                    alertController.dismissViewControllerAnimated(true, completion: nil)
+                }))
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            } else {
+                // Fallback on earlier versions
+                let alertView = UIAlertView(title: "error".localized, message: "no_metadata".localized, delegate: nil, cancelButtonTitle: "ok".localized)
+                alertView.show()
+            }
+           
+        
+                
         }
         
         

@@ -6,4 +6,6 @@
   Copyright © 2016 Vijay Chandran J. All rights reserved.
 */
 "close" = "Close";
+"ok" = "OK";
+"error" = "Error";
 "no_metadata" = "No meta-data found for image";

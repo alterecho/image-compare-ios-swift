@@ -15,6 +15,7 @@
 		5F13E9EA1C8EDB58005AD286 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F13E9E91C8EDB58005AD286 /* Constants.swift */; };
 		5F21C1801C96CB2E00309D75 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F21C1821C96CB2E00309D75 /* Localizable.strings */; };
 		5F21C1851C96CEF100309D75 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F21C1841C96CEF100309D75 /* StringExtension.swift */; };
+		5F21C1981C97F7AD00309D75 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F21C19A1C97F7AD00309D75 /* InfoPlist.strings */; };
 		5F6025391C8708FD00EACB29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6025381C8708FD00EACB29 /* AppDelegate.swift */; };
 		5F60253B1C8708FD00EACB29 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F60253A1C8708FD00EACB29 /* MainViewController.swift */; };
 		5F6025401C8708FD00EACB29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F60253F1C8708FD00EACB29 /* Assets.xcassets */; };
@@ -64,6 +65,9 @@
 		5F21C1931C96D21900309D75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = fr; path = fr.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F21C1941C96D21C00309D75 /* es */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = es; path = es.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F21C1951C96D21F00309D75 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.storyboard"; sourceTree = "<group>"; };
+		5F21C1991C97F7AD00309D75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5F21C19B1C97F7B100309D75 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5F21C19C1C97F7B200309D75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5F6025351C8708FD00EACB29 /* Image Compare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Image Compare.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F6025381C8708FD00EACB29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F60253A1C8708FD00EACB29 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +148,7 @@
 				5F13E9A21C8E5C90005AD286 /* DetailsTableViewController.swift */,
 				5FF88CBA1C91798800F0B6E1 /* DetailsTableViewHeaderFooterView.swift */,
 				5FF88CBC1C92724F00F0B6E1 /* DetailsTableViewCell.swift */,
+				5F21C19A1C97F7AD00309D75 /* InfoPlist.strings */,
 				5F21C1821C96CB2E00309D75 /* Localizable.strings */,
 				5FF88CC01C929A7B00F0B6E1 /* meta data */,
 				5F60253F1C8708FD00EACB29 /* Assets.xcassets */,
@@ -291,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F6025431C8708FD00EACB29 /* LaunchScreen.storyboard in Resources */,
+				5F21C1981C97F7AD00309D75 /* InfoPlist.strings in Resources */,
 				5F21C1801C96CB2E00309D75 /* Localizable.strings in Resources */,
 				5F6025401C8708FD00EACB29 /* Assets.xcassets in Resources */,
 			);
@@ -385,6 +391,16 @@
 				5F21C18C1C96D20100309D75 /* Base */,
 			);
 			name = Info.plist;
+			sourceTree = "<group>";
+		};
+		5F21C19A1C97F7AD00309D75 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5F21C1991C97F7AD00309D75 /* Base */,
+				5F21C19B1C97F7B100309D75 /* en */,
+				5F21C19C1C97F7B200309D75 /* fr */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		5F6025411C8708FD00EACB29 /* LaunchScreen.storyboard */ = {

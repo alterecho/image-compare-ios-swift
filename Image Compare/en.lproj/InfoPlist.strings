@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  Image Compare
+
+  Created by Vijay Chandran J on 15/03/16.
+  Copyright © 2016 Vijay Chandran J. All rights reserved.
+*/
+
+"CFBundleDisplayName" = "Image Compare";
+"CFBundleName" = "Image Compare";

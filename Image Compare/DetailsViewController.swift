@@ -36,12 +36,13 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
     }
     
     /** dismisses the view controller */
-    func dismiss() {
+    func dismiss(completedAction: (completed: Bool)->()) {
         UIView.animateWithDuration(0.25, animations: { () -> Void in
             self.view.alpha = 0.0
-            }) { (completed) -> Void in
+            }) { (completed_) -> Void in
                 self.removeFromParentViewController()
                 self.view.removeFromSuperview()
+                completedAction(completed: completed_)
         }
     }
     

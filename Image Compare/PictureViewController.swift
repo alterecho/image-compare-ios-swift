@@ -150,12 +150,14 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         
     }
     
-    /* not private, because it's used from outside (as action of bar button item) */
+    /* not private, because it's used from outside (as action of close bar button item) */
     func _hideDetails() {
         if let vc = _detailsViewController {
-            vc.dismiss()
-            let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
-            _toolBar.setItems([_addBarButtonItem, flexibleSpaceBarButtonItem, _cameraBarButtonItem, flexibleSpaceBarButtonItem, _detailsBarButtonItem], animated: true)
+            vc.dismiss({ (completed) -> () in
+                let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: nil, action: nil)
+                self._toolBar.setItems([self._addBarButtonItem, flexibleSpaceBarButtonItem, self._cameraBarButtonItem, flexibleSpaceBarButtonItem, self._detailsBarButtonItem], animated: true)
+            })
+            
         }
     }
     

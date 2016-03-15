@@ -29,6 +29,7 @@ class DetailsTableViewController: UITableViewController {
         
         self.tableView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         self.tableView.separatorColor = UIColor.whiteColor()
+        self.tableView.indicatorStyle = UIScrollViewIndicatorStyle.White
     }
 
     override func didReceiveMemoryWarning() {

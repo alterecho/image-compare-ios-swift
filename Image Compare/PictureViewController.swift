@@ -52,6 +52,7 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         _addBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addButtonAction:")
         _cameraBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Camera, target: self, action: "cameraButtonAction:")
         _detailsBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Bookmarks, target: self, action: "compareButtonAction:")
+        _detailsBarButtonItem.enabled = false
         
         _cancelBarButtonItem = UIBarButtonItem(title: NSLocalizedString("close".localized, comment: "nil"), style: UIBarButtonItemStyle.Plain, target: self, action: "_hideDetails")
         
@@ -81,7 +82,11 @@ class PictureViewController: UIViewController, UIImagePickerControllerDelegate, 
         
             // * the pictureView will extract the image and metadata
         
-        self._pictureView.set(imagePickerControllerMediaInfo: info)
+        if self._pictureView.set(imagePickerControllerMediaInfo: info).0 {  // * if image was extracted from the info
+            _detailsBarButtonItem.enabled = true
+        } else {    // * no image. disable details button
+            _detailsBarButtonItem.enabled = false
+        }
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
     

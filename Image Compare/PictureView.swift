@@ -17,24 +17,35 @@ class PictureView: UIView {
     
     /**
         extracts relevant data (image and metadata) from an info dictionary.
-        set the info from the UIImagePickerController delegate method.
+        sets the info from the UIImagePickerController delegate method.
+        - returns: a tuple indicating if an image was extacted (0) and if meta-data was found (1)
     */
-    func set(imagePickerControllerMediaInfo info: [String: AnyObject]) {
+    func set(imagePickerControllerMediaInfo info: [String: AnyObject]) -> (Bool, Bool) {
+        
+        var ret: (Bool, Bool) = (false, false)
+        
+            // * get image from info
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self._imageView.image = image
             self._imageView.sizeToFit()
+            ret.0 = true
+            
         }
-        
+        // * get meta-data from info
         if let url = info[UIImagePickerControllerReferenceURL] as? NSURL {
             let assetsLibrary = ALAssetsLibrary()
             assetsLibrary.assetForURL(url, resultBlock: { (asset: ALAsset!) -> Void in
                 let assetRepresentation: ALAssetRepresentation = asset.defaultRepresentation()
                 self.metaDataSet = MetaDataSet(dictionary: assetRepresentation.metadata())
+                ret.1 = true
                 }, failureBlock: { (error: NSError!) -> Void in
                     
             })
         }
+        
+        return ret
     }
+    
     
     /** the metadata of the image is retrieved, when the image */
     private(set) var metaDataSet: MetaDataSet?

@@ -20,11 +20,11 @@ class DetailsTableViewCell: UITableViewCell {
         
         // * get title rect
         let titleString = mde.title + "    " as NSString
-        let r_title = titleString.boundingRect(with: CGSize(width: cellWidth * _RATIO_TITLE, height: CGFloat(FLT_MAX)), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
+        let r_title = titleString.boundingRect(with: CGSize(width: cellWidth * _RATIO_TITLE, height: CGFloat(Float.greatestFiniteMagnitude)), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
         
         // * get value rect
         let valueString = mde.valueString as NSString
-        let r_value = valueString.boundingRect(with: CGSize(width: cellWidth * _RATIO_VALUE, height: CGFloat(FLT_MAX)), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
+        let r_value = valueString.boundingRect(with: CGSize(width: cellWidth * _RATIO_VALUE, height: CGFloat(Float.greatestFiniteMagnitude)), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
         
         return r_title.size.height > r_value.size.height ? r_title.size.height * 30.0 / fontSize : r_value.size.height * 30.0 / fontSize
     }
@@ -39,11 +39,11 @@ class DetailsTableViewCell: UITableViewCell {
                 
                 if delta > 0 {
                     
-                    _deltaLabel.text = "(+\(metaDataElement!.delta))"
+                    _deltaLabel.text = "(+\(delta))"
                     _deltaLabel.textColor = _COLOR_GREATER
                 } else if delta < 0 {
                     
-                    _deltaLabel.text = "(-\(metaDataElement?.delta))"
+                    _deltaLabel.text = "(-\(delta))"
                     _deltaLabel.textColor = _COLOR_LESSER
                 } else if delta == 0 {
                     

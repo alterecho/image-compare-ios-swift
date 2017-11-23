@@ -13,7 +13,7 @@ class Controller {
         
     }
     
-    private func initializeClassVariables() {
+    fileprivate func initializeClassVariables() {
         
     }
 }

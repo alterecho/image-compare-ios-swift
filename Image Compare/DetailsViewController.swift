@@ -14,40 +14,40 @@ import UIKit
 class DetailsViewController: UIViewController, _DetailsViewProtocol {
     
     /** the overlay frame that is calculated based on the screen size */
-    static var overlayFrame: CGRect = CGRectZero
+    static var overlayFrame: CGRect = CGRect.zero
     
     /**
      Sets the metadata to be displayed
      - parameters:
         - metaDataSet: the MetaDataSet object to be displayed
      */
-    func show(metaDataSet metaDataSet: MetaDataSet, inViewController vc: PictureViewController) {
+    func show(metaDataSet: MetaDataSet, inViewController vc: PictureViewController) {
         
         vc.addChildViewController(self)
         self.view.alpha = 0.0
         vc.view.addSubview(self.view)
         
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
             self.view.alpha = 1.0
-            }) { (completed) -> Void in
+            }, completion: { (completed) -> Void in
                 self._detailsTableViewController.tableData = metaDataSet
                 self._detailsTableViewController.tableView.reloadData()
-        }
+        }) 
     }
     
     /** dismisses the view controller */
-    func dismiss(completedAction: (completed: Bool)->()) {
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
+    func dismiss(_ completedAction: @escaping (_ completed: Bool)->()) {
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
             self.view.alpha = 0.0
-            }) { (completed_) -> Void in
+            }, completion: { (completed_) -> Void in
                 self.removeFromParentViewController()
                 self.view.removeFromSuperview()
-                completedAction(completed: completed_)
-        }
+                completedAction(completed_)
+        }) 
     }
     
     /** sets the method, and it's instance, to be called to dismiss this view controller (when clicked outside) */
-    func set(dismissTarget dismissTarget: AnyObject, action: (() -> Void)) {
+    func set(dismissTarget: AnyObject, action: @escaping (() -> Void)) {
         _dismissTarget = dismissTarget
         _dismissAction = action
         
@@ -70,10 +70,10 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let pvc = self.parentViewController {
-            let screenSize = UIScreen.mainScreen().bounds.size
+        if let pvc = self.parent {
+            let screenSize = UIScreen.main.bounds.size
             
-            self.view.backgroundColor = UIColor.clearColor()
+            self.view.backgroundColor = UIColor.clear
             
                 // * initialize the details table controller
             
@@ -85,25 +85,25 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
             if screenSize.height < 736 {    // * less than iPhone 6 plus
                 
                 let pvcs = pvc.view.frame.size
-                DetailsViewController.overlayFrame = CGRectMake(0.0, _toolbarHeight, pvcs.width, pvcs.height - _toolbarHeight)
+                DetailsViewController.overlayFrame = CGRect(x: 0.0, y: _toolbarHeight, width: pvcs.width, height: pvcs.height - _toolbarHeight)
                 
                 
             } else {
                 
-                let pvcs = CGSizeMake(pvc.view.frame.size.width, pvc.view.frame.size.height - _toolbarHeight)
-                DetailsViewController.overlayFrame = CGRectMake(
-                    pvcs.width * 0.5 - pvcs.width * 0.75 * 0.5,
-                    pvcs.height * 0.5 - pvcs.height * 0.75 * 0.5 + _toolbarHeight,
-                    pvcs.width * 0.75,
-                    pvcs.height * 0.75
+                let pvcs = CGSize(width: pvc.view.frame.size.width, height: pvc.view.frame.size.height - _toolbarHeight)
+                DetailsViewController.overlayFrame = CGRect(
+                    x: pvcs.width * 0.5 - pvcs.width * 0.75 * 0.5,
+                    y: pvcs.height * 0.5 - pvcs.height * 0.75 * 0.5 + _toolbarHeight,
+                    width: pvcs.width * 0.75,
+                    height: pvcs.height * 0.75
                 )
             }
             
             self.view.frame = DetailsViewController.overlayFrame
             _detailsTableViewController = DetailsTableViewController()
             let tableView = _detailsTableViewController.tableView
-            self.view.addSubview(tableView)
-            tableView.frame = self.view.bounds
+            self.view.addSubview(tableView!)
+            tableView?.frame = self.view.bounds
         }
         
         
@@ -113,12 +113,12 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         (self.view as! _DetailsView).delegate = self
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if let v = self.view as? _DetailsView {
             v.delegate = nil
@@ -133,28 +133,28 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
     
     
     //MARK:- UITableViewDataSource/delegate
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         return cell
     }
     
     
     //MARK:- private
-    private var _detailsTableViewController: DetailsTableViewController!
-    private var _toolbarHeight: CGFloat = c_TOOL_BAR_HEIGHT // * toolbar height of the parent view controller
-    private var _dismissTarget: AnyObject? // * an instance that handles the dismissal of this controller (called for out-of-view touches)
+    fileprivate var _detailsTableViewController: DetailsTableViewController!
+    fileprivate var _toolbarHeight: CGFloat = c_TOOL_BAR_HEIGHT // * toolbar height of the parent view controller
+    fileprivate var _dismissTarget: AnyObject? // * an instance that handles the dismissal of this controller (called for out-of-view touches)
     //private var _dismissAction: Selector? // * the selector that handles the dismissal of this controller (called for out-of-view touches)
-    private var _dismissAction: (() -> Void)?
+    fileprivate var _dismissAction: (() -> Void)?
     
-    private func detailsViewClickedOutside(view: _DetailsView) {
+    fileprivate func detailsViewClickedOutside(_ view: _DetailsView) {
         // * close the details window
         //self.view.removeFromSuperview()
         print("detailsView clicked outside")
@@ -172,7 +172,7 @@ class DetailsViewController: UIViewController, _DetailsViewProtocol {
 
 //MARK:- _DetailsViewProtocol -
 private protocol _DetailsViewProtocol: class {
-    func detailsViewClickedOutside(view: _DetailsView)
+    func detailsViewClickedOutside(_ view: _DetailsView)
 }
 
 //MARK:- _DetailsView -
@@ -182,7 +182,7 @@ private protocol _DetailsViewProtocol: class {
 private class _DetailsView: UIView {
     weak var delegate: _DetailsViewProtocol?
     
-    private override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView? {
+    fileprivate override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         print("point:", point, "frame:", self.frame)
         if point.x < 0.0 ||
             point.y < 0.0 ||
@@ -192,6 +192,6 @@ private class _DetailsView: UIView {
                 method
             }
         }
-        return super.hitTest(point, withEvent: event)
+        return super.hitTest(point, with: event)
     }
 }

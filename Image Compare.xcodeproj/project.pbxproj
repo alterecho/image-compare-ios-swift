@@ -256,13 +256,16 @@
 					5F6025341C8708FD00EACB29 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 2KM52TUWUW;
+						LastSwiftMigration = 0830;
 					};
 					5F6025481C8708FE00EACB29 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0830;
 						TestTargetID = 5F6025341C8708FD00EACB29;
 					};
 					5F6025531C8708FE00EACB29 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0830;
 						TestTargetID = 5F6025341C8708FD00EACB29;
 					};
 				};
@@ -514,6 +517,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vjc.Image-Compare";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -530,6 +534,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vjc.Image-Compare";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -541,6 +546,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vjc.Image-CompareTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Image Compare.app/Image Compare";
 			};
 			name = Debug;
@@ -553,6 +559,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vjc.Image-CompareTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Image Compare.app/Image Compare";
 			};
 			name = Release;
@@ -564,6 +571,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vjc.Image-CompareUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "Image Compare";
 				USES_XCTRUNNER = YES;
 			};
@@ -576,6 +584,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vjc.Image-CompareUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = "Image Compare";
 				USES_XCTRUNNER = YES;
 			};

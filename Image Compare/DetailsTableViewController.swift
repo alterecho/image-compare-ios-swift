@@ -24,12 +24,12 @@ class DetailsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        self.tableView.registerClass(DetailsTableViewCell.self, forCellReuseIdentifier: CELL_ID)
-        self.tableView.registerClass(DetailsTableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: HEADER_ID)
+        self.tableView.register(DetailsTableViewCell.self, forCellReuseIdentifier: CELL_ID)
+        self.tableView.register(DetailsTableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: HEADER_ID)
         
-        self.tableView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
-        self.tableView.separatorColor = UIColor.whiteColor()
-        self.tableView.indicatorStyle = UIScrollViewIndicatorStyle.White
+        self.tableView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        self.tableView.separatorColor = UIColor.white
+        self.tableView.indicatorStyle = UIScrollViewIndicatorStyle.white
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,14 +39,14 @@ class DetailsTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         if let count = tableData?.count {
             return count
         }
         return 0
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
        
         return 44.0
     }
@@ -54,26 +54,26 @@ class DetailsTableViewController: UITableViewController {
 //        return tableData?[section].typeName
 //    }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let metaData = tableData?[section] {
             return metaData.count
         }
         return 0
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let metaData = tableData?[indexPath.section] {
             return DetailsTableViewCell.heightForMetaDataElement(metaDataElement: metaData[indexPath.row])
         }
         return 44.0
     }
     
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let ret = tableView.dequeueReusableHeaderFooterViewWithIdentifier(HEADER_ID)
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let ret = tableView.dequeueReusableHeaderFooterView(withIdentifier: HEADER_ID)
         return ret
     }
     
-    override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
         let headerView = view as! DetailsTableViewHeaderFooterView
         //headerView.contentView.backgroundColor = UIColor.clearColor()
@@ -88,8 +88,8 @@ class DetailsTableViewController: UITableViewController {
         
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: DetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier(CELL_ID, forIndexPath: indexPath) as! DetailsTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: DetailsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CELL_ID, for: indexPath) as! DetailsTableViewCell
         if let metaData = tableData?[indexPath.section] {
             let metaDataElement = metaData[indexPath.row] as? DeltaMetaDataElement
             //cell.textLabel?.text = metaDataElement.title
@@ -97,14 +97,14 @@ class DetailsTableViewController: UITableViewController {
             cell.metaDataElement = metaDataElement
             
         }
-        cell.backgroundColor = UIColor.clearColor()
+        cell.backgroundColor = UIColor.clear
         cell.textLabel?.textColor = COLOR_THEME_HIGHLIGHT
         
         return cell
     }
     
-    private let CELL_ID = "cell"
-    private let HEADER_ID = "header"
+    fileprivate let CELL_ID = "cell"
+    fileprivate let HEADER_ID = "header"
 
    
 }

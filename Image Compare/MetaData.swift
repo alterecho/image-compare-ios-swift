@@ -9,10 +9,10 @@
 import Foundation
 
 class MetaData : CustomDebugStringConvertible {
-    private(set) var typeName: String = ""
+    fileprivate(set) var typeName: String = ""
     
     /** the array of metadata elements this metadata represents. Individual elements can also be accessed through the array subscript ([]) */
-    private(set) var data: [DeltaMetaDataElement] = Array<DeltaMetaDataElement>()
+    fileprivate(set) var data: [DeltaMetaDataElement] = Array<DeltaMetaDataElement>()
     
     init?(dictionaryElement el: (NSObject, AnyObject)) {
         
@@ -21,7 +21,7 @@ class MetaData : CustomDebugStringConvertible {
         }
         
         typeName = el.0 as! String
-        typeName = typeName.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "{}"))
+        typeName = typeName.trimmingCharacters(in: CharacterSet(charactersIn: "{}"))
         for el in el.1 as! [String : AnyObject] {
             let element = DeltaMetaDataElement(title:el.0, value: el.1)
             data.append(element)

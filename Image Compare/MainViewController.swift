@@ -16,18 +16,18 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.view.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = UIColor.black
         
         pictureViewController1 = PictureViewController()
         pictureViewController2 = PictureViewController()
-        pictureViewController1.view.backgroundColor = UIColor.yellowColor()
-        pictureViewController1?.view.frame = CGRectMake(
-            0.0, c_STATUS_BAR_HEIGHT,
-            self.view.frame.size.width, (self.view.frame.size.height - c_STATUS_BAR_HEIGHT) * 0.5
+        pictureViewController1.view.backgroundColor = UIColor.yellow
+        pictureViewController1?.view.frame = CGRect(
+            x: 0.0, y: c_STATUS_BAR_HEIGHT,
+            width: self.view.frame.size.width, height: (self.view.frame.size.height - c_STATUS_BAR_HEIGHT) * 0.5
         )
-        pictureViewController2?.view.frame = CGRectMake(
-            0.0, pictureViewController1!.view.frame.origin.y + pictureViewController1!.view.frame.size.height,
-            self.view.frame.size.width, (self.view.frame.size.height - c_STATUS_BAR_HEIGHT) * 0.5
+        pictureViewController2?.view.frame = CGRect(
+            x: 0.0, y: pictureViewController1!.view.frame.origin.y + pictureViewController1!.view.frame.size.height,
+            width: self.view.frame.size.width, height: (self.view.frame.size.height - c_STATUS_BAR_HEIGHT) * 0.5
         )
         
         self.addChildViewController(pictureViewController1!)
@@ -42,27 +42,27 @@ class MainViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         if #available(iOS 8.0, *) {
-            super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+            super.viewWillTransition(to: size, with: coordinator)
         } else {
             // Fallback on earlier versions
         };
-        coordinator.animateAlongsideTransition({ (context) -> Void in
+        coordinator.animate(alongsideTransition: { (context) -> Void in
             
             
             if size.width > size.height {
                 
                 // * landscape
-                self.pictureViewController1.frame = CGRectMake(0.0, self.statusBarHeight, size.width * 0.5, size.height);
-                self.pictureViewController2.frame = CGRectMake(size.width * 0.5, self.statusBarHeight, size.width * 0.5, size.height)
+                self.pictureViewController1.frame = CGRect(x: 0.0, y: self.statusBarHeight, width: size.width * 0.5, height: size.height);
+                self.pictureViewController2.frame = CGRect(x: size.width * 0.5, y: self.statusBarHeight, width: size.width * 0.5, height: size.height)
             } else {
                 
                 // * portrait
-                self.pictureViewController1.frame = CGRectMake(0.0, self.statusBarHeight, size.width, size.height * 0.5)
-                self.pictureViewController2.frame = CGRectMake(0.0,
-                    self.pictureViewController1.frame.origin.y + self.pictureViewController1.frame.size.height,
-                    size.width, size.height * 0.5)
+                self.pictureViewController1.frame = CGRect(x: 0.0, y: self.statusBarHeight, width: size.width, height: size.height * 0.5)
+                self.pictureViewController2.frame = CGRect(x: 0.0,
+                    y: self.pictureViewController1.frame.origin.y + self.pictureViewController1.frame.size.height,
+                    width: size.width, height: size.height * 0.5)
             }
             
             }) { (context) -> Void in
@@ -71,34 +71,34 @@ class MainViewController: UIViewController {
     }
     
     /* iOS 7 and below */
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        super.willRotateToInterfaceOrientation(toInterfaceOrientation, duration: duration)
-        if toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight {
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
+        super.willRotate(to: toInterfaceOrientation, duration: duration)
+        if toInterfaceOrientation == UIInterfaceOrientation.landscapeLeft || toInterfaceOrientation == UIInterfaceOrientation.landscapeRight {
             
             // * landscape
-            let ss = UIScreen.mainScreen().bounds.size
-            let size = CGSizeMake(ss.height, ss.width)
-            self.pictureViewController1.frame = CGRectMake(0.0, self.statusBarHeight, size.width * 0.5, size.height);
-            self.pictureViewController2.frame = CGRectMake(size.width * 0.5, self.statusBarHeight, size.width * 0.5, size.height)
+            let ss = UIScreen.main.bounds.size
+            let size = CGSize(width: ss.height, height: ss.width)
+            self.pictureViewController1.frame = CGRect(x: 0.0, y: self.statusBarHeight, width: size.width * 0.5, height: size.height);
+            self.pictureViewController2.frame = CGRect(x: size.width * 0.5, y: self.statusBarHeight, width: size.width * 0.5, height: size.height)
         } else {
             
             // * portrait
-            let ss = UIScreen.mainScreen().bounds.size
-            let size = CGSizeMake(ss.width, ss.height)
-            self.pictureViewController1.frame = CGRectMake(0.0, self.statusBarHeight, size.width, size.height * 0.5)
-            self.pictureViewController2.frame = CGRectMake(0.0,
-                self.pictureViewController1.frame.origin.y + self.pictureViewController1.frame.size.height,
-                size.width, size.height * 0.5)
+            let ss = UIScreen.main.bounds.size
+            let size = CGSize(width: ss.width, height: ss.height)
+            self.pictureViewController1.frame = CGRect(x: 0.0, y: self.statusBarHeight, width: size.width, height: size.height * 0.5)
+            self.pictureViewController2.frame = CGRect(x: 0.0,
+                y: self.pictureViewController1.frame.origin.y + self.pictureViewController1.frame.size.height,
+                width: size.width, height: size.height * 0.5)
         }
     }
     
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
-    private var pictureViewController1, pictureViewController2: PictureViewController!
-    private var statusBarHeight: CGFloat = 20.0
+    fileprivate var pictureViewController1, pictureViewController2: PictureViewController!
+    fileprivate var statusBarHeight: CGFloat = 20.0
     
 
 }

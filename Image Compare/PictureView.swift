@@ -32,15 +32,15 @@ class PictureView: UIView {
             
         }
         // * get meta-data from info
-        if let url = info[UIImagePickerControllerReferenceURL] as? NSURL {
+        if let url = info[UIImagePickerControllerReferenceURL] as? URL {
             let assetsLibrary = ALAssetsLibrary()
-            assetsLibrary.assetForURL(url, resultBlock: { (asset: ALAsset!) -> Void in
+            assetsLibrary.asset(for: url, resultBlock: { (asset: ALAsset!) -> Void in
                 let assetRepresentation: ALAssetRepresentation = asset.defaultRepresentation()
-                self.metaDataSet = MetaDataSet(dictionary: assetRepresentation.metadata())
+                self.metaDataSet = MetaDataSet(dictionary: assetRepresentation.metadata() as! [NSObject : AnyObject])
                 ret.1 = true
                 }, failureBlock: { (error: NSError!) -> Void in
                     
-            })
+            } as! ALAssetsLibraryAccessFailureBlock)
         }
         
         return ret
@@ -48,7 +48,7 @@ class PictureView: UIView {
     
     
     /** the metadata of the image is retrieved, when the image */
-    private(set) var metaDataSet: MetaDataSet?
+    fileprivate(set) var metaDataSet: MetaDataSet?
     
     /** is changed by PictureViewController, when it's frame property is set */
     var toolBarHeight: CGFloat = 0.0
@@ -56,26 +56,26 @@ class PictureView: UIView {
     
 
     convenience init() {
-        self.init(frame: CGRectZero)
+        self.init(frame: CGRect.zero)
         
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.greenColor()
+        self.backgroundColor = UIColor.green
         
         // * gestures
-        _panGesture = UIPanGestureRecognizer(target: self, action: "pan:")
+        _panGesture = UIPanGestureRecognizer(target: self, action: #selector(PictureView.pan(_:)))
         self.addGestureRecognizer(_panGesture!)
         
-        _rotationGesture = UIRotationGestureRecognizer(target: self, action: "rotate:")
+        _rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(PictureView.rotate(_:)))
         self.addGestureRecognizer(_rotationGesture!)
         
-        _tapGesture = UITapGestureRecognizer(target: self, action: "tap:")
+        _tapGesture = UITapGestureRecognizer(target: self, action: #selector(PictureView.tap(_:)))
         _tapGesture?.numberOfTapsRequired = 2
         self.addGestureRecognizer(_tapGesture!)
         
-        _pinchGesture = UIPinchGestureRecognizer(target: self, action: "pinch:")
+        _pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(PictureView.pinch(_:)))
         self.addGestureRecognizer(_pinchGesture!)
         
         
@@ -106,71 +106,71 @@ class PictureView: UIView {
         
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        touchPoint = touch?.locationInView(touch?.view)
-        super.touchesBegan(touches, withEvent: event)
+        touchPoint = touch?.location(in: touch?.view)
+        super.touchesBegan(touches, with: event)
     }
     
-    @IBAction private func pan(gesture: UIPanGestureRecognizer) {
-        print(gesture.translationInView(self))
-        let t = gesture.translationInView(self)
-        if gesture.state == UIGestureRecognizerState.Began {
+    @IBAction fileprivate func pan(_ gesture: UIPanGestureRecognizer) {
+        print(gesture.translation(in: self))
+        let t = gesture.translation(in: self)
+        if gesture.state == UIGestureRecognizerState.began {
             originalPosition = _imageView.center
-        } else if gesture.state == UIGestureRecognizerState.Ended {
+        } else if gesture.state == UIGestureRecognizerState.ended {
         } else {
             if let _ = touchPoint {
-                _imageView.center = CGPointMake(originalPosition.x + t.x, originalPosition.y + t.y)
+                _imageView.center = CGPoint(x: originalPosition.x + t.x, y: originalPosition.y + t.y)
             }
             
         }
         
     }
     
-    @IBAction private func rotate(gesture: UIRotationGestureRecognizer) {
+    @IBAction fileprivate func rotate(_ gesture: UIRotationGestureRecognizer) {
         print(gesture.rotation)
-        if gesture.state == UIGestureRecognizerState.Began {
+        if gesture.state == UIGestureRecognizerState.began {
             let transform = _imageView.transform
             _initialAngle = atan2(transform.b, transform.a)
-        } else if gesture.state == UIGestureRecognizerState.Changed {
-            let transform = CGAffineTransformMakeRotation(_initialAngle + gesture.rotation)
+        } else if gesture.state == UIGestureRecognizerState.changed {
+            let transform = CGAffineTransform(rotationAngle: _initialAngle + gesture.rotation)
             _imageView.transform = transform
         }
        
     }
     
-    @IBAction private func tap(gesture: UITapGestureRecognizer) {
+    @IBAction fileprivate func tap(_ gesture: UITapGestureRecognizer) {
         if gesture.numberOfTapsRequired == 2 {
             self.reset()
         }
     }
     
-    @IBAction private func pinch(gesture: UIPinchGestureRecognizer) {
+    @IBAction fileprivate func pinch(_ gesture: UIPinchGestureRecognizer) {
         print(gesture.scale)
-        if gesture.state == UIGestureRecognizerState.Began {
+        if gesture.state == UIGestureRecognizerState.began {
             _initialFrame = _imageView.bounds
-        } else if gesture.state == UIGestureRecognizerState.Changed {
+        } else if gesture.state == UIGestureRecognizerState.changed {
             let w = _initialFrame.width * gesture.scale
             let h = _initialFrame.height * gesture.scale
-            _imageView.bounds = CGRectMake(0.0, 0.0, w, h)
+            _imageView.bounds = CGRect(x: 0.0, y: 0.0, width: w, height: h)
         }
         
     }
     
     
-    private var _panGesture: UIPanGestureRecognizer?            // * to move the image
-    private var _rotationGesture: UIRotationGestureRecognizer?  // * to rotate image with two fingers
-    private var _tapGesture: UITapGestureRecognizer?            // * double tap picture size toggle (fit to screen, max size)
-    private var _pinchGesture: UIPinchGestureRecognizer?        // * pinch zoom
+    fileprivate var _panGesture: UIPanGestureRecognizer?            // * to move the image
+    fileprivate var _rotationGesture: UIRotationGestureRecognizer?  // * to rotate image with two fingers
+    fileprivate var _tapGesture: UITapGestureRecognizer?            // * double tap picture size toggle (fit to screen, max size)
+    fileprivate var _pinchGesture: UIPinchGestureRecognizer?        // * pinch zoom
     
-    private let _imageView: UIImageView = UIImageView()     // * the image container
-    private var originalPosition: CGPoint = CGPointZero     // * to move the image according to touch location inside (natural pan)
-    private var touchPoint: CGPoint?                        // * the point of first touch
-    private var _initialFrame: CGRect = CGRectZero          // * used to calculate image frame, for pinch gesture
-    private var _initialAngle: CGFloat = 0.0                // * used for rotation gesture
+    fileprivate let _imageView: UIImageView = UIImageView()     // * the image container
+    fileprivate var originalPosition: CGPoint = CGPoint.zero     // * to move the image according to touch location inside (natural pan)
+    fileprivate var touchPoint: CGPoint?                        // * the point of first touch
+    fileprivate var _initialFrame: CGRect = CGRect.zero          // * used to calculate image frame, for pinch gesture
+    fileprivate var _initialAngle: CGFloat = 0.0                // * used for rotation gesture
     
-    private func reset() {
-        _imageView.transform = CGAffineTransformMakeRotation(0.0)
+    fileprivate func reset() {
+        _imageView.transform = CGAffineTransform(rotationAngle: 0.0)
         
         if (_imageView.frame.size.width != _imageView.image?.size.width) {
             _imageView.sizeToFit()
@@ -179,11 +179,12 @@ class PictureView: UIView {
         }
         
         
-        _imageView.center = CGPointMake(self.bounds.size.width * 0.5, toolBarHeight + (self.bounds.size.height - toolBarHeight) * 0.5)
+        _imageView.center = CGPoint(x: self.bounds.size.width * 0.5, y: toolBarHeight + (self.bounds.size.height - toolBarHeight) * 0.5)
         
     }
     
-    private func rectFittingRectInRect(var rect f1: CGRect, var containingRect f2: CGRect, inset: UIEdgeInsets) -> CGRect {
+    private func rectFittingRectInRect(rect f1: CGRect, containingRect f2: CGRect, inset: UIEdgeInsets) -> CGRect {
+        var f1 = f1, f2 = f2
         f2.origin.x += inset.left
         f2.origin.y += inset.top
         f2.size.width -= (inset.left + inset.right)

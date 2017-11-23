@@ -18,15 +18,15 @@ class DetailsTableViewHeaderFooterView: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         
         titleLabel.textColor = COLOR_THEME_HIGHLIGHT
-        titleLabel.textAlignment = NSTextAlignment.Center
+        titleLabel.textAlignment = NSTextAlignment.center
         
-        blurOverlay.barTintColor = UIColor.blackColor()
-        blurOverlay.translucent = true
+        blurOverlay.barTintColor = UIColor.black
+        blurOverlay.isTranslucent = true
         
         self.contentView.addSubview(blurOverlay)
         self.contentView.addSubview(titleLabel)
-        self.contentView.backgroundColor = UIColor.clearColor()
-        self.backgroundColor = UIColor.yellowColor()
+        self.contentView.backgroundColor = UIColor.clear
+        self.backgroundColor = UIColor.yellow
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -41,8 +41,8 @@ class DetailsTableViewHeaderFooterView: UITableViewHeaderFooterView {
         
         set(value) {
             super.frame = value
-            blurOverlay.frame = CGRectMake(0.0, 0.0, super.frame.size.width, super.frame.size.height)
-            titleLabel.frame = CGRectInset(self.bounds, 10.0, 10.0)
+            blurOverlay.frame = CGRect(x: 0.0, y: 0.0, width: super.frame.size.width, height: super.frame.size.height)
+            titleLabel.frame = self.bounds.insetBy(dx: 10.0, dy: 10.0)
         }
     }
     

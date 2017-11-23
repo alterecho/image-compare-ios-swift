@@ -10,13 +10,13 @@ import Foundation
 
 class MetaDataSet : CustomDebugStringConvertible {
     
-    private var _metaDataArray: [MetaData] = [MetaData]()
+    fileprivate var _metaDataArray: [MetaData] = [MetaData]()
     
-    init(dictionary d: [NSObject : AnyObject]) {
+    init(dictionary d: [AnyHashable: Any]) {
         
         for el in d {
             
-            if let metaData = MetaData(dictionaryElement: el) {
+            if let metaData = MetaData(dictionaryElement: el as! (NSObject, AnyObject)) {
                 _metaDataArray.append(metaData)
             }
         }

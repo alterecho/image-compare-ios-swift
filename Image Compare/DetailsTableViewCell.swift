@@ -46,8 +46,7 @@ class DetailsTableViewCell: UITableViewCell {
                     _deltaLabel.text = "(-\(delta))"
                     _deltaLabel.textColor = _COLOR_LESSER
                 } else if delta == 0 {
-                    
-                    _deltaLabel.text = "\(metaDataElement?.delta)"
+                    _deltaLabel.text = "\(delta)"
                     _deltaLabel.textColor = _COLOR_EQUAL
                 }
             } else {

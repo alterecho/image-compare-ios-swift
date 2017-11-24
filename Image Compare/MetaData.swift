@@ -14,7 +14,7 @@ class MetaData : CustomDebugStringConvertible {
     /** the array of metadata elements this metadata represents. Individual elements can also be accessed through the array subscript ([]) */
     fileprivate(set) var data: [DeltaMetaDataElement] = Array<DeltaMetaDataElement>()
     
-    init?(dictionaryElement el: (NSObject, AnyObject)) {
+    init?(dictionaryElement el: (AnyHashable, Any)) {
         
         if !(el.0 is String) || !(el.1 is [String : AnyObject]){
             return nil

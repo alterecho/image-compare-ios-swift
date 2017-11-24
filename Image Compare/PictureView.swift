@@ -34,13 +34,27 @@ class PictureView: UIView {
         // * get meta-data from info
         if let url = info[UIImagePickerControllerReferenceURL] as? URL {
             let assetsLibrary = ALAssetsLibrary()
-            assetsLibrary.asset(for: url, resultBlock: { (asset: ALAsset!) -> Void in
-                let assetRepresentation: ALAssetRepresentation = asset.defaultRepresentation()
-                self.metaDataSet = MetaDataSet(dictionary: assetRepresentation.metadata() as! [NSObject : AnyObject])
-                ret.1 = true
-                }, failureBlock: { (error: NSError!) -> Void in
+            
+            assetsLibrary.asset(for: url, resultBlock: { (asset: ALAsset?) in
+                if let assetRepresentation: ALAssetRepresentation = asset?.defaultRepresentation() {
+//                    self.metaDataSet = MetaDataSet(dictionary: assetRepresentation.metadata() as! [NSObject : AnyObject])
                     
-            } as! ALAssetsLibraryAccessFailureBlock)
+                    self.metaDataSet = MetaDataSet(dictionary: assetRepresentation.metadata())
+                    
+                    ret.1 = true
+                }
+                
+            }, failureBlock: { (error: Error?) in
+                
+            })
+            
+//            assetsLibrary.asset(for: url, resultBlock: { (asset: ALAsset!) -> Void in
+//                let assetRepresentation: ALAssetRepresentation = asset.defaultRepresentation()
+//                self.metaDataSet = MetaDataSet(dictionary: assetRepresentation.metadata() as! [NSObject : AnyObject])
+//                ret.1 = true
+//                }, failureBlock: { (error: NSError!) -> Void in
+//                    
+//            } as! ALAssetsLibraryAccessFailureBlock)
         }
         
         return ret

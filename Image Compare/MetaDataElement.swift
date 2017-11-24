@@ -1,3 +1,4 @@
+
 //
 //  MetaData_Element.swift
 //  Image Compare
@@ -16,7 +17,7 @@ class MetaDataElement : CustomDebugStringConvertible {
     }
     
     init(title: String, value: AnyObject) {
-        print("\(title)(\(type(of: title))): \(value)\(type(of: value)))")
+//        print("\(title)(\(type(of: title))): \(value)\(type(of: value)))")
         
         self.title = title
         self.value = value

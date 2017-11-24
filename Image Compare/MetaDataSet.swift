@@ -16,7 +16,7 @@ class MetaDataSet : CustomDebugStringConvertible {
         
         for el in d {
             
-            if let metaData = MetaData(dictionaryElement: el as! (NSObject, AnyObject)) {
+            if let metaData = MetaData(dictionaryElement: el) {
                 _metaDataArray.append(metaData)
             }
         }
